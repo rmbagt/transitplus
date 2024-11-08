@@ -48,6 +48,7 @@ export default function LoginPage() {
                   placeholder="name@example.com"
                   required
                   type="email"
+                  className="focus-visible:ring-blue-400"
                 />
               </div>
               <div className="space-y-2">
@@ -62,7 +63,7 @@ export default function LoginPage() {
                     id="password"
                     required
                     type={showPassword ? "password" : "text"}
-                    className="pr-10"
+                    className="pr-10 focus-visible:ring-blue-400"
                   />
                   <Button
                     variant="ghost"
