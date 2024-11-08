@@ -14,12 +14,12 @@ export default function SignupPageClient() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-svh w-full">
       <div className="absolute inset-0 h-svh bg-gradient-to-t from-blue-300 to-white" />
       <div
         className="absolute inset-0"
         style={{
-          background: "url(/login_bg.png) no-repeat center center fixed",
+          background: "url(/login-bg.svg) no-repeat center center fixed",
           backgroundSize: "cover",
         }}
       />
@@ -75,13 +75,13 @@ export default function SignupPageClient() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent focus-visible:outline-none focus-visible:ring-blue-400"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
                       <Eye className="h-4 w-4" />
+                    ) : (
+                      <EyeOff className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
@@ -98,13 +98,13 @@ export default function SignupPageClient() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent focus-visible:outline-none focus-visible:ring-blue-400"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
                       <Eye className="h-4 w-4" />
+                    ) : (
+                      <EyeOff className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
