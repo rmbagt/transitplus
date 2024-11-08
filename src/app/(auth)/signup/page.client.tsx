@@ -14,12 +14,12 @@ export default function SignupPageClient() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <div className="relative w-full md:min-h-screen">
+    <div className="relative min-h-svh w-full">
       <div className="absolute inset-0 h-svh bg-gradient-to-t from-blue-300 to-white" />
       <div
         className="absolute inset-0"
         style={{
-          background: "url(/login_bg.png) no-repeat center center fixed",
+          background: "url(/login-bg.svg) no-repeat center center fixed",
           backgroundSize: "cover",
         }}
       />
@@ -50,6 +50,7 @@ export default function SignupPageClient() {
                   placeholder="Rafael Marvin"
                   required
                   type="text"
+                  className="focus-visible:ring-blue-400"
                 />
               </div>
               <div className="space-y-2">
@@ -59,6 +60,7 @@ export default function SignupPageClient() {
                   placeholder="rafaelmarvin@gmail.com"
                   required
                   type="email"
+                  className="focus-visible:ring-blue-400"
                 />
               </div>
               <div className="space-y-2">
@@ -68,18 +70,18 @@ export default function SignupPageClient() {
                     id="password"
                     required
                     type={showPassword ? "text" : "password"}
-                    className="pr-10"
+                    className="pr-10 focus-visible:ring-blue-400"
                   />
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent focus-visible:outline-none focus-visible:ring-blue-400"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
                       <Eye className="h-4 w-4" />
+                    ) : (
+                      <EyeOff className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
@@ -91,18 +93,18 @@ export default function SignupPageClient() {
                     id="confirmPassword"
                     required
                     type={showConfirmPassword ? "text" : "password"}
-                    className="pr-10"
+                    className="pr-10 focus-visible:ring-blue-400"
                   />
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent focus-visible:outline-none focus-visible:ring-blue-400"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
                       <Eye className="h-4 w-4" />
+                    ) : (
+                      <EyeOff className="h-4 w-4" />
                     )}
                   </Button>
                 </div>
