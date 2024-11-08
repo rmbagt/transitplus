@@ -83,16 +83,20 @@ export default function Leaderboard() {
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <div className="relative h-8 w-8">
-                        <Image
-                          src={user.transportation.icon}
-                          alt={user.transportation.name}
-                          className="object-contain"
-                          fill
-                          sizes="32px"
-                        />
+                        {user.transportation && (
+                          <>
+                            <Image
+                              src={user.transportation.icon}
+                              alt={user.transportation.name}
+                              className="object-contain"
+                              fill
+                              sizes="32px"
+                            />
+                          </>
+                        )}
                       </div>
                       <span className="text-sm text-gray-600">
-                        {user.transportation.name}
+                        {user.transportation?.name}
                       </span>
                     </div>
                   </TableCell>
