@@ -16,11 +16,11 @@ export default function Header() {
           <nav className="rounded-full bg-blue-100/90 px-6 py-2 shadow-lg backdrop-blur-md">
             <ul className="flex items-center gap-8">
               {[
-                ["Home", "/"],
-                ["Points", "/points"],
-                ["Community", "/community"],
-                ["Leaderboard", "/leaderboard"],
-                ["Support", "/support"],
+                ["Home", "/#home"],
+                ["Points", "/#points"],
+                ["Community", "/#community"],
+                ["Leaderboard", "/#leaderboard"],
+                ["Support", "/#support"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link

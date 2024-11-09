@@ -17,6 +17,7 @@ import {
 import { format } from "date-fns";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 export function TravelCard() {
   const [date, setDate] = useState<Date>();
@@ -133,7 +134,9 @@ export function TravelCard() {
           </div>
         </div>
 
-        <Button className="w-full bg-primary">Book Now</Button>
+        <Link href="/tutorial">
+          <Button className="mt-4 w-full bg-primary">Book Now</Button>
+        </Link>
       </CardContent>
     </Card>
   );

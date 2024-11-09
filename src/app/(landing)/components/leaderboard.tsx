@@ -30,7 +30,10 @@ const leaderboardData = Array.from({ length: 10 }, (_, i) => ({
 
 export default function Leaderboard() {
   return (
-    <div className="w-full bg-gradient-to-b from-blue-500 to-blue-600 p-6 py-20">
+    <section
+      id="leaderboard"
+      className="w-full bg-gradient-to-b from-blue-500 to-blue-600 p-6 py-20"
+    >
       <div className="container mx-auto space-y-6">
         <div className="space-y-2">
           <h1 className="mb-4 text-5xl font-extrabold tracking-tighter text-white">
@@ -111,6 +114,6 @@ export default function Leaderboard() {
           </Table>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -21,7 +21,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} font-inter`}>
+    <html lang="en" className={`${inter.variable} scroll-smooth font-inter`}>
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>

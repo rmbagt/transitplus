@@ -42,7 +42,8 @@ export default function FAQ() {
   ];
 
   return (
-    <div
+    <section
+      id="support"
       className="relative flex h-fit flex-col items-center px-4 py-12"
       style={{
         backgroundImage: "url('/login-bg.svg')",
@@ -74,6 +75,6 @@ export default function FAQ() {
           ))}
         </Accordion>
       </div>
-    </div>
+    </section>
   );
 }

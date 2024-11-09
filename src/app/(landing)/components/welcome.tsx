@@ -2,7 +2,10 @@ import { TravelCard } from "@/components/booking/travel";
 
 export default function Welcome() {
   return (
-    <main className="relative flex min-h-svh justify-center bg-[radial-gradient(circle,rgba(99,166,245,1)_0%,rgba(11,83,168,1)_55%)]">
+    <main
+      id="home"
+      className="relative flex min-h-svh justify-center bg-[radial-gradient(circle,rgba(99,166,245,1)_0%,rgba(11,83,168,1)_55%)]"
+    >
       <div
         className="absolute bottom-0 h-[40%] w-screen bg-contain bg-top opacity-30"
         style={{

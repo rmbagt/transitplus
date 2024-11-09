@@ -44,7 +44,8 @@ export default function Community() {
   ];
 
   return (
-    <div
+    <section
+      id="community"
       className="mx-auto flex h-fit w-full flex-col items-center p-10 py-20"
       style={{
         backgroundImage: "url('/login-bg.svg')",
@@ -105,6 +106,6 @@ export default function Community() {
         <CarouselPrevious className="absolute -left-0 size-10 border-none bg-blue-500 text-white hover:bg-primary" />
         <CarouselNext className="absolute -right-0 size-10 border-none bg-blue-500 text-white hover:bg-primary" />
       </Carousel>
-    </div>
+    </section>
   );
 }

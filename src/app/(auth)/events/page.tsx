@@ -57,7 +57,7 @@ export default function Events() {
   const [selectedLocation, setSelectedLocation] = useState("Jakarta Barat");
   const [currentDate, setCurrentDate] = useState(new Date());
   const [registeredEvents, setRegisteredEvents] = useState(new Set());
-  const [selectedDay, setSelectedDay] = useState<Number | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
   // Calendar functions
   const getDaysInMonth = (date: Date): number => {

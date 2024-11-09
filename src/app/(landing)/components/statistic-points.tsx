@@ -6,7 +6,10 @@ import Image from "next/image";
 
 export default function StatisticPoints() {
   return (
-    <div className="flex h-fit items-center justify-center bg-[#F0F6FF] py-20">
+    <section
+      id="points"
+      className="flex h-fit items-center justify-center bg-[#F0F6FF] py-20"
+    >
       <div className="container mx-auto grid w-full gap-4 p-4 md:grid-cols-2">
         <div className="space-y-4">
           {/* Points and Redeem Section */}
@@ -176,6 +179,6 @@ export default function StatisticPoints() {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
