@@ -33,7 +33,9 @@ export default function Leaderboard() {
     <div className="w-full bg-gradient-to-b from-blue-500 to-blue-600 p-6 py-20">
       <div className="container mx-auto space-y-6">
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold text-white">Leaderboard</h1>
+          <h1 className="mb-4 text-5xl font-extrabold tracking-tighter text-white">
+            Leaderboard
+          </h1>
           <p className="text-balance text-blue-100">
             The leaderboard page showcases the top users with the highest points
             earned from using sustainable transport options, fostering friendly
