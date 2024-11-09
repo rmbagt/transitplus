@@ -31,17 +31,17 @@ export default function Steps({ currentStep }: { currentStep: string }) {
                 className={`h-3 w-3 md:h-4 md:w-4 ${
                   currentStep === "select-transport"
                     ? "text-white"
-                    : "text-blue-600"
+                    : "text-primary"
                 }`}
               />
             ) : (
-              <div className="h-3 w-3 rounded-full bg-blue-600 md:h-4 md:w-4" />
+              <div className="h-3 w-3 rounded-full bg-primary md:h-4 md:w-4" />
             )}
             <span
               className={`text-xs font-medium md:text-sm ${
                 currentStep === "select-transport"
                   ? "text-white"
-                  : "text-blue-600"
+                  : "text-primary"
               }`}
             >
               Select Transport
@@ -69,12 +69,12 @@ export default function Steps({ currentStep }: { currentStep: string }) {
             transition={{ duration: 0.3, delay: 0.2 }}
           >
             {currentStep === "set-route" ? (
-              <CircleDot className="h-3 w-3 text-blue-600 md:h-4 md:w-4" />
+              <CircleDot className="h-3 w-3 text-primary md:h-4 md:w-4" />
             ) : (
               <div
                 className={`h-3 w-3 rounded-full ${
                   currentStep === "claim-points"
-                    ? "bg-blue-600"
+                    ? "bg-primary"
                     : "border border-current"
                 } md:h-4 md:w-4 ${
                   currentStep === "select-transport"
@@ -87,7 +87,7 @@ export default function Steps({ currentStep }: { currentStep: string }) {
               className={`text-xs font-medium md:text-sm ${
                 currentStep === "select-transport"
                   ? "text-white opacity-50"
-                  : "text-blue-600"
+                  : "text-primary"
               }`}
             >
               Set Route
@@ -115,7 +115,7 @@ export default function Steps({ currentStep }: { currentStep: string }) {
             transition={{ duration: 0.3, delay: 0.4 }}
           >
             {currentStep === "claim-points" ? (
-              <CircleDot className="h-3 w-3 text-blue-600 md:h-4 md:w-4" />
+              <CircleDot className="h-3 w-3 text-primary md:h-4 md:w-4" />
             ) : (
               <div
                 className={`h-3 w-3 rounded-full border border-blue-600 md:h-4 md:w-4 ${
@@ -129,7 +129,7 @@ export default function Steps({ currentStep }: { currentStep: string }) {
               className={`text-xs font-medium md:text-sm ${
                 currentStep === "select-transport"
                   ? "text-white opacity-50"
-                  : "text-blue-600"
+                  : "text-primary"
               }`}
             >
               Claim Points

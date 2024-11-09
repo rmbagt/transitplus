@@ -21,10 +21,10 @@ export default function WelcomeCard({
             height={64}
             className="h-64 w-64"
           />
-          <h1 className="text-xl font-bold text-blue-600">{title}</h1>
+          <h1 className="text-xl font-bold text-primary">{title}</h1>
           <p className="text-muted-foreground">{text}</p>
           <Link href="/profile">
-            <Button className="mt-4 rounded-full bg-gradient-to-t from-blue-600 to-blue-400 px-4 py-2 text-white transition-all duration-300 hover:from-blue-800 hover:to-blue-500">
+            <Button className="mt-4 rounded-full bg-gradient-to-t from-primary to-blue-400 px-4 py-2 text-white transition-all duration-300 hover:from-blue-800 hover:to-blue-500">
               Back to Profile
             </Button>
           </Link>

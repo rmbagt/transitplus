@@ -51,7 +51,7 @@ export default function FAQ() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 z-10 h-3/5 bg-gradient-to-b from-blue-600 to-transparent" />
+      <div className="absolute inset-0 z-10 h-3/5 bg-gradient-to-b from-primary to-transparent" />
       <div className="z-20 w-full max-w-3xl">
         <h1 className="mb-8 text-balance text-center text-4xl font-extrabold tracking-tighter text-white md:text-5xl">
           Frequently Asked Questions about NamaAplikasi

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { TransportItems } from "@/app/(landing)/tutorial/data";
+import { TransportItems } from "@/app/(auth)/tutorial/data";
 
 export function TransportSliderButton({
   selectedIndex,
@@ -36,7 +36,7 @@ export function TransportSliderButton({
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105 md:h-16 md:w-16 ${
                   selectedIndex === index
-                    ? "bg-white text-blue-600"
+                    ? "bg-white text-primary"
                     : "bg-blue-500 text-white"
                 }`}
               >
@@ -71,10 +71,10 @@ export function TransportSliderImage({
   return (
     <>
       <div className="max-w-md space-y-4 text-center">
-        <h2 className="text-3xl font-bold text-blue-600 md:text-4xl">
+        <h2 className="text-3xl font-bold text-primary md:text-4xl">
           Select your Transport
         </h2>
-        <p className="text-sm text-gray-600 md:text-base">
+        <p className="text-sm text-muted-foreground md:text-base">
           Before you can earn points, you must first choose the public
           transportation you want to take.
         </p>
@@ -149,7 +149,7 @@ export function TransportSliderImage({
         </div>
         <h3
           key={selectedTransport?.name}
-          className="mt-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-center text-2xl font-bold text-transparent md:mt-8 md:text-3xl"
+          className="mt-6 bg-gradient-to-r from-primary to-blue-800 bg-clip-text text-center text-2xl font-bold text-transparent md:mt-8 md:text-3xl"
         >
           {selectedTransport?.name}
         </h3>

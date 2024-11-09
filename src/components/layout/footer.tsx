@@ -48,10 +48,10 @@ export default function Footer() {
                 <Link
                   key={social.name}
                   href={social.href}
-                  className="text-gray-600 hover:text-blue-600"
+                  className="text-gray-600 hover:text-primary"
                 >
                   <span className="sr-only">{social.name}</span>
-                  <div className="h-6 w-6 rounded-full bg-blue-600" />
+                  <div className="h-6 w-6 rounded-full bg-primary" />
                 </Link>
               ))}
             </div>
@@ -66,10 +66,7 @@ export default function Footer() {
               {["Dashboard", "Travel Points", "Events", "Reward System"].map(
                 (item) => (
                   <li key={item}>
-                    <Link
-                      href="#"
-                      className="text-gray-600 hover:text-blue-600"
-                    >
+                    <Link href="#" className="text-gray-600 hover:text-primary">
                       {item}
                     </Link>
                   </li>
@@ -86,7 +83,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {["About Us", "FAQ"].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-gray-600 hover:text-blue-600">
+                  <Link href="#" className="text-gray-600 hover:text-primary">
                     {item}
                   </Link>
                 </li>
@@ -102,7 +99,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {["Executive Summary", "Product Design"].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-gray-600 hover:text-blue-600">
+                  <Link href="#" className="text-gray-600 hover:text-primary">
                     {item}
                   </Link>
                 </li>
@@ -114,16 +111,10 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="mt-8 flex flex-col justify-between border-t pt-8 md:flex-row">
           <div className="flex gap-4">
-            <Link
-              href="#"
-              className="text-sm text-gray-600 hover:text-blue-600"
-            >
+            <Link href="#" className="text-sm text-gray-600 hover:text-primary">
               Terms and Condition
             </Link>
-            <Link
-              href="#"
-              className="text-sm text-gray-600 hover:text-blue-600"
-            >
+            <Link href="#" className="text-sm text-gray-600 hover:text-primary">
               Privacy Policy
             </Link>
           </div>

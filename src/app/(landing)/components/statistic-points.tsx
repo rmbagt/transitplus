@@ -25,7 +25,7 @@ export default function StatisticPoints() {
               </CardContent>
             </Card>
 
-            <Card className="cursor-pointer bg-primary text-white transition-colors hover:bg-blue-600">
+            <Card className="cursor-pointer bg-primary text-white transition-colors hover:bg-primary">
               <CardContent className="flex h-full items-center justify-between p-4">
                 <div className="flex items-center space-x-4">
                   <Gift className="h-6 w-6" />

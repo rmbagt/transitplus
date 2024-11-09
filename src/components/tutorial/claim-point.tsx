@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 export function ClaimPointHero() {
   return (
-    <div className="space-y-4 text-blue-600">
+    <div className="space-y-4 text-primary">
       <h1 className="text-3xl font-bold md:text-4xl">
         Claim your <span className="font-bold">Points!</span>
       </h1>
@@ -19,7 +19,7 @@ export function ClaimPointHero() {
 
 export function ClaimPointForm() {
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-blue-600 p-6">
+    <div className="flex flex-col gap-4 rounded-lg bg-primary p-6">
       <div className="space-y-4 text-white">
         <h1 className="text-3xl font-bold md:text-4xl">Your Journey</h1>
         <p className="text-sm opacity-90 md:text-lg">
@@ -63,7 +63,7 @@ export function ClaimPointForm() {
         </div>
       </div>
       <div className="flex justify-end">
-        <Button className="w-max rounded-full bg-white text-blue-600 hover:bg-blue-50">
+        <Button className="w-max rounded-full bg-white text-primary hover:bg-blue-50">
           Claim Points
         </Button>
       </div>

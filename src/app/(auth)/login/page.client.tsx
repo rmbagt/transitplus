@@ -71,7 +71,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
-                    <Link href="#" className="text-sm text-blue-600">
+                    <Link href="#" className="text-sm text-primary">
                       Forgot?
                     </Link>
                   </div>
@@ -101,7 +101,7 @@ export default function LoginPage() {
               {/* Login Button */}
               <Button
                 onClick={handleLogin}
-                className="mt-6 w-full bg-blue-600 py-2 text-white hover:bg-blue-700"
+                className="mt-6 w-full bg-primary py-2 text-white hover:bg-blue-700"
               >
                 Login Now
               </Button>
@@ -109,7 +109,7 @@ export default function LoginPage() {
               {/* Google Sign Up */}
               <Button
                 onClick={handleLogin}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-blue-600 hover:bg-blue-200"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-primary hover:bg-blue-200"
               >
                 <FcGoogle />
                 Login with Google
@@ -118,7 +118,7 @@ export default function LoginPage() {
               {/* Sign Up Link */}
               <div className="text-center text-sm">
                 Don&apos;t Have An Account?{" "}
-                <Link href="/signup" className="text-blue-600">
+                <Link href="/signup" className="text-primary">
                   Sign Up
                 </Link>
               </div>

@@ -174,7 +174,7 @@ export default function TutorialPageClient(): JSX.Element {
         {/* Left Section */}
         <motion.div
           className={`flex flex-col justify-center p-6 md:w-[40%] md:p-8 ${
-            currentStep === "select-transport" ? "bg-blue-600 text-white" : ""
+            currentStep === "select-transport" ? "bg-primary text-white" : ""
           }`}
           layoutId="left-section"
         >
@@ -226,7 +226,7 @@ export default function TutorialPageClient(): JSX.Element {
               >
                 <Button
                   onClick={() => handleNavigationStep("prev")}
-                  className="w-full rounded-full border-2 border-blue-600 bg-transparent text-blue-600 hover:bg-blue-50 md:w-32"
+                  className="w-full rounded-full border-2 border-blue-600 bg-transparent text-primary hover:bg-blue-50 md:w-32"
                   variant="outline"
                 >
                   Previous
@@ -236,7 +236,7 @@ export default function TutorialPageClient(): JSX.Element {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 onClick={() => handleNavigationStep("next")}
-                className="w-full rounded-full bg-gradient-to-b from-blue-600 to-blue-400 hover:bg-blue-700 md:w-32"
+                className="w-full rounded-full bg-gradient-to-b from-primary to-blue-400 hover:bg-blue-700 md:w-32"
               >
                 {currentStepIndex === StepItems.length - 1 ? "Finish" : "Next"}
               </Button>

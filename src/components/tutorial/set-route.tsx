@@ -3,7 +3,7 @@ import { TravelCard } from "../booking/travel";
 
 export function SetRouteHero() {
   return (
-    <div className="space-y-4 text-blue-600">
+    <div className="space-y-4 text-primary">
       <h1 className="text-3xl font-bold md:text-4xl">
         Where do you want to <span className="font-bold">travel</span> today?
       </h1>
@@ -18,7 +18,7 @@ export function SetRouteHero() {
 export function SetRouteForm() {
   return (
     <div className="flex items-center justify-center gap-2">
-      <div className="hidden h-full flex-col flex-nowrap justify-evenly gap-4 text-end text-blue-600 lg:flex">
+      <div className="hidden h-full flex-col flex-nowrap justify-evenly gap-4 text-end text-primary lg:flex">
         <p>
           Set your <span className="font-semibold">Destination</span>
         </p>

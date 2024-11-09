@@ -131,18 +131,18 @@ export default function SignupPageClient() {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="terms"
-                    className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600"
+                    className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-primary"
                   />
                   <label
                     htmlFor="terms"
                     className="text-sm leading-none text-gray-600"
                   >
                     By creating account, you agree to the{" "}
-                    <Link href="#" className="text-blue-600">
+                    <Link href="#" className="text-primary">
                       Terms of Service
                     </Link>{" "}
                     and our{" "}
-                    <Link href="#" className="text-blue-600">
+                    <Link href="#" className="text-primary">
                       Privacy Policy
                     </Link>
                   </label>
@@ -152,7 +152,7 @@ export default function SignupPageClient() {
               {/* Create Account Button */}
               <Button
                 onClick={handleSignup}
-                className="mt-6 w-full bg-blue-600 py-2 text-white hover:bg-blue-700"
+                className="mt-6 w-full bg-primary py-2 text-white hover:bg-blue-700"
               >
                 Create account
               </Button>
@@ -160,7 +160,7 @@ export default function SignupPageClient() {
               {/* Google Sign Up */}
               <Button
                 onClick={handleSignup}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-blue-600 hover:bg-blue-200"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-primary hover:bg-blue-200"
               >
                 <FcGoogle />
                 Continue with Google
@@ -169,7 +169,7 @@ export default function SignupPageClient() {
               {/* Login Link */}
               <div className="text-center text-sm">
                 Already Have An Account?{" "}
-                <Link href="/login" className="text-blue-600">
+                <Link href="/login" className="text-primary">
                   Log In
                 </Link>
               </div>

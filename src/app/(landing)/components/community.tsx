@@ -79,7 +79,7 @@ export default function Community() {
                       <div className="absolute -bottom-0 left-0 right-0">
                         <Card className="rounded-none border-none shadow-lg">
                           <CardContent className="space-y-2 p-4">
-                            <h3 className="text-lg font-semibold text-blue-600">
+                            <h3 className="text-lg font-semibold text-primary">
                               {event.title}
                             </h3>
                             <div className="flex items-center justify-between text-sm text-gray-600">
@@ -89,7 +89,7 @@ export default function Community() {
                               </div>
                               <span>{event.date}</span>
                             </div>
-                            <div className="text-sm font-medium text-blue-600">
+                            <div className="text-sm font-medium text-primary">
                               {event.time}
                             </div>
                           </CardContent>
@@ -102,8 +102,8 @@ export default function Community() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute -left-0 size-10 border-none bg-blue-500 text-white hover:bg-blue-600" />
-        <CarouselNext className="absolute -right-0 size-10 border-none bg-blue-500 text-white hover:bg-blue-600" />
+        <CarouselPrevious className="absolute -left-0 size-10 border-none bg-blue-500 text-white hover:bg-primary" />
+        <CarouselNext className="absolute -right-0 size-10 border-none bg-blue-500 text-white hover:bg-primary" />
       </Carousel>
     </div>
   );
