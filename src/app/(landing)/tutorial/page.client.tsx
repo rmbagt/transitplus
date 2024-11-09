@@ -14,30 +14,103 @@ import {
   ClaimPointForm,
   ClaimPointHero,
 } from "@/components/tutorial/claim-point";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import type { Variant } from "framer-motion";
 
-export default function TutorialPageClient() {
+type NavigationDirection = "next" | "prev";
+type StepKey = "select-transport" | "set-route" | "claim-points";
+
+interface SlideAnimation {
+  [key: string]:
+    | Variant
+    | {
+        type: string;
+        stiffness: number;
+        damping: number;
+        duration: number;
+      };
+  initial: Variant;
+  animate: Variant;
+  exit: Variant;
+  transition: {
+    type: string;
+    stiffness: number;
+    damping: number;
+    duration: number;
+  };
+}
+
+interface SlideAnimations {
+  left: SlideAnimation;
+  right: SlideAnimation;
+}
+
+const getSlideAnimations = (
+  direction: NavigationDirection,
+): SlideAnimations => ({
+  left: {
+    initial: { x: direction === "next" ? 50 : -50, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: direction === "next" ? -50 : 50, opacity: 0 },
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      duration: 0.3,
+    },
+  },
+  right: {
+    initial: { x: direction === "next" ? -50 : 50, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: direction === "next" ? 50 : -50, opacity: 0 },
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      duration: 0.3,
+    },
+  },
+});
+
+const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.3 },
+} as const;
+
+export default function TutorialPageClient(): JSX.Element {
   const router = useRouter();
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<StepKey>("select-transport");
+  const [direction, setDirection] = useState<NavigationDirection>("next");
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [currentStep, setCurrentStep] = useState("select-transport");
-
-  const handleNextStep = () => {
+  const handleNavigationStep = (type: NavigationDirection): void => {
     const currentStepIndex = StepItems.findIndex(
       (step) => step.key === currentStep,
     );
-    const nextStepIndex = currentStepIndex + 1;
 
-    if (nextStepIndex < StepItems.length) {
-      if (StepItems[nextStepIndex]) {
-        setCurrentStep(StepItems[nextStepIndex].key);
+    setDirection(type);
+
+    if (type === "next") {
+      const nextStepIndex = currentStepIndex + 1;
+      if (nextStepIndex < StepItems.length) {
+        if (StepItems[nextStepIndex]) {
+          setCurrentStep(StepItems[nextStepIndex].key as StepKey);
+        }
+      } else {
+        router.push("/");
       }
     } else {
-      router.push("/");
+      const prevStepIndex = currentStepIndex - 1;
+      if (prevStepIndex >= 0 && StepItems[prevStepIndex]) {
+        setCurrentStep(StepItems[prevStepIndex].key as StepKey);
+      }
     }
   };
 
-  const renderLeftComponent = () => {
-    switch (currentStep) {
+  const renderLeftComponent = (step: StepKey): JSX.Element | null => {
+    switch (step) {
       case "select-transport":
         return (
           <TransportSliderButton
@@ -54,8 +127,8 @@ export default function TutorialPageClient() {
     }
   };
 
-  const renderRightComponent = () => {
-    switch (currentStep) {
+  const renderRightComponent = (step: StepKey): JSX.Element | null => {
+    switch (step) {
       case "select-transport":
         return <TransportSliderImage selectedIndex={selectedIndex} />;
       case "set-route":
@@ -67,36 +140,110 @@ export default function TutorialPageClient() {
     }
   };
 
+  const currentStepIndex = StepItems.findIndex(
+    (step) => step.key === currentStep,
+  );
+  const slideAnimations = getSlideAnimations(direction);
+
   return (
-    <div className="flex min-h-svh flex-col md:h-svh md:flex-row">
-      <div
-        className="absolute inset-0 -z-10 blur-sm"
-        style={{
-          background: `url(${StepItems.find((step) => currentStep == step.key)?.backgroundImage}) no-repeat center center fixed`,
-          backgroundSize: "cover",
-        }}
-      />
-
-      {/* Left Section */}
-      <div
-        className={`flex flex-col justify-center p-6 md:w-[40%] md:p-8 ${currentStep == "select-transport" && "bg-blue-600 text-white"}`}
+    <LayoutGroup>
+      <motion.div
+        className="flex min-h-svh flex-col md:h-svh md:flex-row"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
       >
-        {renderLeftComponent()}
-        <Steps currentStep={currentStep} />
-      </div>
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={`background-${currentStep}`}
+            className="absolute inset-0 -z-10 blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              background: `url(${
+                StepItems.find((step) => currentStep === step.key)
+                  ?.backgroundImage
+              }) no-repeat center center fixed`,
+              backgroundSize: "cover",
+            }}
+          />
+        </AnimatePresence>
 
-      {/* Right Section */}
-      <div className="flex flex-col items-center justify-center gap-4 p-6 md:w-[60%] md:p-8">
-        {renderRightComponent()}
-
-        {/* Button */}
-        <Button
-          onClick={handleNextStep}
-          className="w-full rounded-full bg-gradient-to-b from-blue-600 to-blue-400 hover:bg-blue-700 md:w-32"
+        {/* Left Section */}
+        <motion.div
+          className={`flex flex-col justify-center p-6 md:w-[40%] md:p-8 ${
+            currentStep === "select-transport" ? "bg-blue-600 text-white" : ""
+          }`}
+          layoutId="left-section"
         >
-          Next
-        </Button>
-      </div>
-    </div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={`left-${currentStep}`}
+              variants={slideAnimations.right}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              layoutId={`left-content-${currentStep}`}
+            >
+              {renderLeftComponent(currentStep)}
+            </motion.div>
+          </AnimatePresence>
+          <Steps currentStep={currentStep} />
+        </motion.div>
+
+        {/* Right Section */}
+        <motion.div
+          className="flex flex-col items-center justify-center gap-4 p-6 md:w-[60%] md:p-8"
+          layoutId="right-section"
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={`right-${currentStep}`}
+              className="flex w-full flex-col items-center justify-center gap-4"
+              variants={slideAnimations.left}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              layoutId={`right-content-${currentStep}`}
+            >
+              {renderRightComponent(currentStep)}
+            </motion.div>
+          </AnimatePresence>
+
+          <motion.div
+            className="flex gap-4"
+            variants={fadeIn}
+            initial="initial"
+            animate="animate"
+            layoutId="navigation-buttons"
+          >
+            {currentStepIndex > 0 && (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  onClick={() => handleNavigationStep("prev")}
+                  className="w-full rounded-full border-2 border-blue-600 bg-transparent text-blue-600 hover:bg-blue-50 md:w-32"
+                  variant="outline"
+                >
+                  Previous
+                </Button>
+              </motion.div>
+            )}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={() => handleNavigationStep("next")}
+                className="w-full rounded-full bg-gradient-to-b from-blue-600 to-blue-400 hover:bg-blue-700 md:w-32"
+              >
+                {currentStepIndex === StepItems.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </LayoutGroup>
   );
 }
