@@ -47,7 +47,7 @@ export default function TutorialPageClient() {
         );
       case "set-route":
         return <SetRouteHero />;
-      case "claim-point":
+      case "claim-points":
         return <ClaimPointHero />;
       default:
         return null;
