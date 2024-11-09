@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { History } from "./components/history";
-import { Profile } from "./components/profile";
+import { History } from "@/components/profile/history";
+import { Profile } from "@/components/profile/profile";
 
 export default function Component() {
   const router = useRouter();

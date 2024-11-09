@@ -99,7 +99,7 @@ export default function TutorialPageClient(): JSX.Element {
           setCurrentStep(StepItems[nextStepIndex].key as StepKey);
         }
       } else {
-        router.push("/");
+        router.push("/profile");
       }
     } else {
       const prevStepIndex = currentStepIndex - 1;

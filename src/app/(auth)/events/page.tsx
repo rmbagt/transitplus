@@ -178,7 +178,7 @@ export default function Events() {
         </div>
 
         <div className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold">Location</h2>
+          <h2 className="mb-4 text-xl font-semibold text-blue-900">Location</h2>
           <div className="flex flex-wrap gap-2">
             {LOCATIONS.map((location) => (
               <Button

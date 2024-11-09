@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BusFrontIcon, CheckCircle, MapPinIcon } from "lucide-react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { CheckCircle, MapPinIcon } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
 const transportModes = [
   { name: "All", icon: MapPinIcon },
