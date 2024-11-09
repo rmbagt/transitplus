@@ -9,8 +9,8 @@ export default async function Home() {
     <>
       <Welcome />
       <StatisticPoints />
-      <Leaderboard />
       <Community />
+      <Leaderboard />
       <FAQ />
     </>
   );

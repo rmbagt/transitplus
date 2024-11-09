@@ -13,7 +13,7 @@ export default function Welcome() {
       <div className="absolute bottom-0 h-[40%] w-screen bg-gradient-to-t from-[#0B53A8] via-90% to-transparent" />
       <div className="container relative flex h-svh items-center justify-around gap-5">
         <div className="flex flex-col">
-          <p className="w-1/2 text-7xl font-extrabold tracking-tighter text-background">
+          <p className="text-7xl font-extrabold tracking-tighter text-background">
             Ride, Earn, Thrive
           </p>
           <p className="text-balance text-4xl font-semibold tracking-tight text-background">
