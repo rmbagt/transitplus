@@ -35,7 +35,7 @@ export default function Header() {
           </nav>
 
           <Link
-            href="/profile"
+            href="/login"
             className="flex items-center gap-2 rounded-full bg-blue-100/90 px-6 py-2 text-sm font-medium text-primary shadow-lg backdrop-blur-md transition-colors hover:text-blue-400"
           >
             Profile

@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -23,7 +25,10 @@ export default function LoginPage() {
       />
 
       {/* Back Button */}
-      <Button className="relative left-1 top-1 z-40 flex w-max items-center bg-transparent p-4 text-gray-600 hover:bg-transparent hover:text-gray-800 md:left-5 md:top-5">
+      <Button
+        onClick={() => router.back()}
+        className="relative left-1 top-1 z-40 flex w-max items-center bg-transparent p-4 text-gray-600 hover:bg-transparent hover:text-gray-800 md:left-5 md:top-5"
+      >
         <ArrowLeft className="mr-1 h-4 w-4" />
         Back
       </Button>
@@ -82,15 +87,19 @@ export default function LoginPage() {
             </div>
 
             {/* Login Button */}
-            <Button className="w-full bg-blue-600 py-2 text-white hover:bg-blue-700">
-              Login Now
-            </Button>
+            <Link href="/profile">
+              <Button className="mt-6 w-full bg-blue-600 py-2 text-white hover:bg-blue-700">
+                Login Now
+              </Button>
+            </Link>
 
-            {/* Google Login */}
-            <Button className="flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-blue-600 hover:bg-blue-200">
-              <FcGoogle />
-              Login with Google
-            </Button>
+            {/* Google Sign Up */}
+            <Link href="/profile">
+              <Button className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-blue-600 hover:bg-blue-200">
+                <FcGoogle />
+                Login with Google
+              </Button>
+            </Link>
 
             {/* Sign Up Link */}
             <div className="text-center text-sm">

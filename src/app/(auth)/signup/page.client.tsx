@@ -8,8 +8,10 @@ import { FcGoogle } from "react-icons/fc";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupPageClient() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -25,7 +27,10 @@ export default function SignupPageClient() {
       />
 
       {/* Back Button */}
-      <Button className="relative left-1 top-1 z-40 flex w-max items-center bg-transparent p-4 text-gray-600 hover:bg-transparent hover:text-gray-800 md:left-5 md:top-5">
+      <Button
+        onClick={() => router.back()}
+        className="relative left-1 top-1 z-40 flex w-max items-center bg-transparent p-4 text-gray-600 hover:bg-transparent hover:text-gray-800 md:left-5 md:top-5"
+      >
         <ArrowLeft className="mr-1 h-4 w-4" />
         Back
       </Button>
@@ -131,15 +136,19 @@ export default function SignupPageClient() {
             </div>
 
             {/* Create Account Button */}
-            <Button className="w-full bg-blue-600 py-2 text-white hover:bg-blue-700">
-              Create account
-            </Button>
+            <Link href="/profile">
+              <Button className="mt-6 w-full bg-blue-600 py-2 text-white hover:bg-blue-700">
+                Create account
+              </Button>
+            </Link>
 
             {/* Google Sign Up */}
-            <Button className="flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-blue-600 hover:bg-blue-200">
-              <FcGoogle />
-              Continue with Google
-            </Button>
+            <Link href="/profile">
+              <Button className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-100 py-2 text-blue-600 hover:bg-blue-200">
+                <FcGoogle />
+                Continue with Google
+              </Button>
+            </Link>
 
             {/* Login Link */}
             <div className="text-center text-sm">
