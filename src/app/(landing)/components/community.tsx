@@ -76,8 +76,8 @@ export default function Community() {
                     />
 
                     {event.title && (
-                      <div className="absolute -bottom-0 left-4 right-4">
-                        <Card className="rounded-none rounded-t-lg border-none shadow-lg">
+                      <div className="absolute -bottom-0 left-0 right-0">
+                        <Card className="rounded-none border-none shadow-lg">
                           <CardContent className="space-y-2 p-4">
                             <h3 className="text-lg font-semibold text-blue-600">
                               {event.title}
