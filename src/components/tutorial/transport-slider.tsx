@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { TransportItems } from "@/app/tutorial/data";
+import { TransportItems } from "@/app/(landing)/tutorial/data";
 
 export function TransportSliderButton({
   selectedIndex,
