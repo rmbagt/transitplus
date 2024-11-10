@@ -14,28 +14,28 @@ import Image from "next/image";
 export default function Community() {
   const events = [
     {
-      image: "/carousel-1.png",
+      image: "/community-meetup.svg",
       title: "Community Meetup",
       date: "01-11-2023",
       location: "Central Park",
       time: "10:00 - 12:00",
     },
     {
-      image: "/carousel-2.png",
+      image: "/travel-around-jakarta.svg",
       title: "Travel around Jakarta",
       date: "15-10-2004",
       location: "International Monument",
       time: "09:00 - 13:00",
     },
     {
-      image: "/carousel-3.png",
+      image: "/tech-conference.svg",
       title: "Tech Conference",
       date: "20-11-2023",
       location: "Tech Hub",
       time: "14:00 - 18:00",
     },
     {
-      image: "/carousel-1.png",
+      image: "/art-exhibition.svg",
       title: "Art Exhibition",
       date: "05-12-2023",
       location: "City Gallery",

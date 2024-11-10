@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Label } from "@/components/ui/label";
 
@@ -35,6 +36,7 @@ export function NavMain({
         <CircleFadingPlusIcon />
       </SidebarGroupLabel>
       <SidebarMenu>
+        <SidebarTrigger className="hidden size-8 items-center justify-center overflow-y-auto bg-blue-100 text-primary hover:bg-gray-200 focus-visible:ring-blue-400 md:flex" />
         {items.map((item) => (
           <Collapsible
             key={item.title}
