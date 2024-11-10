@@ -1,29 +1,115 @@
-# Create T3 App
+# TransitPlus 🚃
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+TransitPlus adalah aplikasi berbasis web yang dirancang untuk memberikan pengalaman transportasi umum yang lebih interaktif dan menarik melalui fitur pengumpulan poin dan penukaran reward. Dengan TransitPlus, pengguna dapat mengumpulkan poin dari perjalanan menggunakan transportasi umum dan menukarkannya dengan berbagai hadiah menarik dari mitra yang bekerja sama. Aplikasi ini bertujuan untuk meningkatkan minat masyarakat dalam menggunakan transportasi umum serta mendukung gaya hidup yang lebih ramah lingkungan.
 
-## What's next? How do I make an app with this?
+### Live Website
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+[TransitPlus Live](https://transitplus.rey.mba/)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+---
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Table of Contents
 
-## Learn More
+1. [Installation](#installation)
+2. [Environment Setup](#environment-setup)
+3. [Usage](#usage)
+4. [Features](#features)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+---
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Installation
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### Prerequisites
 
-## How do I deploy this?
+- Node.js/Bun/pnpm sudah terinstall di sistem Anda.
+- Mengerti cara menggunakan terminal atau command prompt.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Steps
+
+1. **Clone Repository:**
+
+   ```bash
+   git clone https://github.com/reynaldomarchell/interium-hack.git
+   ```
+
+2. **Install Dependencies:**
+
+   Gunakan package manager pilihan Anda (sebaiknya bun):
+
+   - Menggunakan bun:
+
+     ```bash
+     bun install
+     ```
+
+3. **Setup Database dengan Prisma:**
+
+   Lakukan migrasi database menggunakan Prisma:
+
+   ```bash
+   bunx prisma db push
+   ```
+
+4. **Start Development Server:**
+
+   Jalankan server pengembangan:
+
+   ```bash
+   bun dev
+   ```
+
+5. **Access Application:**
+
+   Buka URL berikut di browser: [http://localhost:3000/](http://localhost:3000/)
+
+## Environment Setup
+
+Pastikan Anda memiliki file `.env` yang benar dengan variabel yang dibutuhkan. Jika belum ada, buat dan isi sesuai dengan kebutuhan aplikasi, contohnya:
+
+```
+DATABASE_URL="postgresql://postgres:password@localhost:5432/interium-hack"
+
+NEXTAUTH_SECRET=""
+NEXTAUTH_URL="http://localhost:3000"
+
+DISCORD_CLIENT_ID=""
+DISCORD_CLIENT_SECRET=""
+```
+
+## Usage
+
+1. **Landing Page:**
+
+   Setelah membuka aplikasi, Anda akan diarahkan ke halaman utama yang menjelaskan tentang TransitPlus dan cara kerjanya.
+
+2. **Login:**
+
+   Untuk mengakses fitur lengkap, login diperlukan. Anda bisa melakukan login menggunakan akun Google atau Discord.
+
+3. **Signup:**
+
+   Jika anda belum mempunyai akun, maka bisa membuat akun terlebih dahulu.
+
+4. **/profile**
+
+   - Berisi history penggunaan transportasi dan personal information.
+   - Daftar perjalanan yang telah dilakukan
+
+5. **/events:**
+
+   - Akses melalui Sidebar --> Events.
+   - Berisi informasi mengenai acara atau inisiatif komunitas yang berkaitan dengan penggunaan transportasi umum.
+
+6. **/points**
+
+   - Akses melalui Sidebar --> TravelPoints.
+   - Pilih reward yang tersedia berdasarkan poin yang dimiliki dan tukarkan langsung dari aplikasi.
+   - Berisi poin yang diperoleh dari setiap perjalanan.
+
+## Features
+
+- **Poin Perjalanan:** Mengumpulkan poin dari setiap penggunaan transportasi umum.
+- **Penukaran Reward:** Menukarkan poin dengan berbagai hadiah dari mitra TransitPlus.
+- **Riwayat Perjalanan:** Melihat daftar perjalanan dan statistik penggunaan.
+- **Login Integration:** Masuk dengan mudah menggunakan akun Google atau Discord.
+- **Community Events:** Berpartisipasi dalam acara atau komunitas untuk mendukung penggunaan transportasi umum.
