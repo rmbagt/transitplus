@@ -113,3 +113,8 @@ DISCORD_CLIENT_SECRET=""
 - **Riwayat Perjalanan:** Melihat daftar perjalanan dan statistik penggunaan.
 - **Login Integration:** Masuk dengan mudah menggunakan akun Google atau Discord.
 - **Community Events:** Berpartisipasi dalam acara atau komunitas untuk mendukung penggunaan transportasi umum.
+
+## Contributors
+<a href="https://github.com/reynaldomarchell/interium-hack/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=reynaldomarchell/interium-hack"/>
+</a>
