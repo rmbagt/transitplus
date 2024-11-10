@@ -117,7 +117,7 @@ export default function Events() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-svh bg-gray-50">
       <div
         className="relative h-64"
         style={{
@@ -131,7 +131,7 @@ export default function Events() {
 
         <Button
           onClick={() => router.back()}
-          className="absolute left-4 top-4 z-40 flex w-max items-center justify-center bg-white/20 text-white hover:bg-white/30 md:left-20 md:top-8"
+          className="absolute left-16 top-4 z-40 flex w-max items-center justify-center bg-white/20 text-white hover:bg-white/30 md:left-20 md:top-8"
         >
           <ArrowLeft className="mr-1 h-4 w-4" />
           <span>Back</span>
