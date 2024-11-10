@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FaFacebook, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const transportCompanies = [
   { name: "KAI", icon: "/kai.svg" },
@@ -10,9 +11,10 @@ const transportCompanies = [
 ];
 
 const socialLinks = [
-  { name: "Twitter", href: "#", icon: "twitter" },
-  { name: "TikTok", href: "#", icon: "tiktok" },
-  { name: "YouTube", href: "#", icon: "youtube" },
+  { name: "Twitter", href: "#", icon: FaTwitter },
+  { name: "Facebook", href: "#", icon: FaFacebook },
+  { name: "TikTok", href: "#", icon: FaTiktok },
+  { name: "YouTube", href: "#", icon: FaYoutube },
 ];
 
 export default function Footer() {
@@ -51,7 +53,7 @@ export default function Footer() {
                   className="text-gray-600 hover:text-primary"
                 >
                   <span className="sr-only">{social.name}</span>
-                  <div className="h-6 w-6 rounded-full bg-primary" />
+                  <social.icon className="h-6 w-6" />
                 </Link>
               ))}
             </div>
