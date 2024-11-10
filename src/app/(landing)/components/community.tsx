@@ -46,7 +46,7 @@ export default function Community() {
   return (
     <section
       id="community"
-      className="mx-auto flex h-fit w-full flex-col items-center p-10 py-20"
+      className="mx-auto flex h-fit w-full flex-col items-center p-4 py-12 sm:p-6 sm:py-16 md:p-10 md:py-20"
       style={{
         backgroundImage: "url('/login-bg.svg')",
         backgroundSize: "contain",
@@ -54,16 +54,16 @@ export default function Community() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <h1 className="mb-4 rounded-lg bg-blue-100 p-3 text-right text-5xl font-extrabold tracking-tighter text-blue-900">
+      <h1 className="mb-4 rounded-lg bg-blue-100 p-2 text-center text-3xl font-extrabold tracking-tighter text-blue-900 sm:p-3 sm:text-right sm:text-4xl md:text-5xl">
         Community
       </h1>
 
-      <Carousel className="z-10 flex h-fit px-20 py-10">
-        <CarouselContent className="-ml-4">
+      <Carousel className="z-10 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
+        <CarouselContent className="-ml-2 sm:-ml-4">
           {events.map((event, index) => (
             <CarouselItem
               key={index}
-              className="pl-4 md:basis-1/2 lg:basis-1/3"
+              className="basis-full pl-2 sm:basis-1/2 sm:pl-4 lg:basis-1/3"
             >
               <Card className="overflow-hidden border-none shadow-lg">
                 <CardContent className="p-0">
@@ -77,20 +77,20 @@ export default function Community() {
                     />
 
                     {event.title && (
-                      <div className="absolute -bottom-0 left-0 right-0">
+                      <div className="absolute bottom-0 left-0 right-0">
                         <Card className="rounded-none border-none shadow-lg">
-                          <CardContent className="space-y-2 p-4">
-                            <h3 className="text-lg font-semibold text-primary">
+                          <CardContent className="space-y-1 p-2 sm:space-y-2 sm:p-4">
+                            <h3 className="text-base font-semibold text-primary sm:text-lg">
                               {event.title}
                             </h3>
-                            <div className="flex items-center justify-between text-sm text-gray-600">
+                            <div className="flex flex-col text-xs text-gray-600 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
                               <div className="flex items-center gap-1">
-                                <MapPin className="h-4 w-4" />
+                                <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
                                 <span>{event.location}</span>
                               </div>
                               <span>{event.date}</span>
                             </div>
-                            <div className="text-sm font-medium text-primary">
+                            <div className="text-xs font-medium text-primary sm:text-sm">
                               {event.time}
                             </div>
                           </CardContent>
@@ -103,8 +103,8 @@ export default function Community() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute -left-0 size-10 border-none bg-blue-500 text-white hover:bg-primary" />
-        <CarouselNext className="absolute -right-0 size-10 border-none bg-blue-500 text-white hover:bg-primary" />
+        <CarouselPrevious className="absolute -left-2 size-8 border-none bg-blue-500 text-white hover:bg-primary sm:-left-4 sm:size-10" />
+        <CarouselNext className="absolute -right-2 size-8 border-none bg-blue-500 text-white hover:bg-primary sm:-right-4 sm:size-10" />
       </Carousel>
     </section>
   );
