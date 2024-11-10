@@ -1,6 +1,6 @@
 "use client";
 
-import { type LucideIcon } from "lucide-react";
+import { CircleFadingPlusIcon, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { HiSparkles } from "react-icons/hi2";
 
@@ -12,6 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Label } from "@/components/ui/label";
 
 export function NavMain({
   items,
@@ -29,9 +30,9 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>
-        <HiSparkles />
-        <span className="hidden font-bold sm:inline-block">quiz/ai</span>
+      <SidebarGroupLabel className="space-x-1 text-primary">
+        <p className="font-bold sm:inline-block">TransitPlus</p>
+        <CircleFadingPlusIcon />
       </SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
