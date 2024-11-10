@@ -106,7 +106,7 @@ export default function Points() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute inset-0 rounded-b-lg bg-gradient-to-b from-[#0C4384]/80 to-[#1577EA]/80 md:rounded-b-[2rem] lg:rounded-b-[4rem]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0C4384]/80 to-[#1577EA]/80" />
 
         <Button
           onClick={() => router.back()}
@@ -119,11 +119,11 @@ export default function Points() {
         <div className="absolute inset-0 flex items-center justify-center pb-20">
           <div className="container flex flex-col items-start justify-start gap-2 p-4 md:p-6 lg:p-8">
             <div className="flex items-center gap-2">
-              <div className="flex size-20 items-center justify-center rounded-full bg-white">
-                <AwardIcon size={40} className="text-primary" />
+              <div className="flex size-10 items-center justify-center rounded-full bg-white md:size-20">
+                <AwardIcon className="size-4 text-primary md:size-10" />
               </div>
               <div className="flex items-center gap-4">
-                <span className="text-4xl text-white">
+                <span className="text-2xl text-white md:text-4xl">
                   <span className="font-light">Travel</span>
                   <span className="font-black tracking-tight">Points</span>
                 </span>

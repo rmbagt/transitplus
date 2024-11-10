@@ -119,7 +119,7 @@ export default function Events() {
   return (
     <div className="min-h-svh bg-gray-50">
       <div
-        className="relative h-64"
+        className="relative h-32 md:h-64"
         style={{
           backgroundImage: "url(/profile-bg.png)",
           backgroundSize: "cover",
@@ -138,12 +138,12 @@ export default function Events() {
         </Button>
 
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container flex items-center justify-end gap-2 p-4 md:p-6 lg:p-8">
-            <span className="text-4xl text-white">
+          <div className="container flex items-center justify-end gap-2 p-4 md:flex-row md:p-6 lg:p-8">
+            <span className="text-2xl text-white md:text-4xl">
               <span className="font-black">Events</span>
             </span>
-            <div className="flex size-20 items-center justify-center rounded-full bg-white">
-              <CalendarClockIcon size={40} className="text-primary" />
+            <div className="flex size-10 items-center justify-center rounded-full bg-white md:size-20">
+              <CalendarClockIcon className="size-4 text-primary md:size-10" />
             </div>
           </div>
         </div>
