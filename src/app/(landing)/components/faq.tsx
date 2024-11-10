@@ -10,32 +10,32 @@ import {
 export default function FAQ() {
   const faqItems = [
     {
-      question: "What is NamaAplikasi?",
+      question: "What is TransitPlus?",
       answer:
         "Lorem ipsum dolor sit amet. 33 nihil deserunt ab ipsum dolore sit perferendis quaerat et iste nemo eos accusantium molestias? Est voluptatem nobis id minima quia et porro sunt nam sapiente laboriosam aut labore modi vel tempore animi?",
     },
     {
-      question: "What is NamaAplikasi?",
+      question: "What is TransitPlus?",
       answer:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus earum dicta nesciunt, nisi excepturi eligendi.",
     },
     {
-      question: "What is NamaAplikasi?",
+      question: "What is TransitPlus?",
       answer:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus earum dicta nesciunt, nisi excepturi eligendi.",
     },
     {
-      question: "What is NamaAplikasi?",
+      question: "What is TransitPlus?",
       answer:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus earum dicta nesciunt, nisi excepturi eligendi.",
     },
     {
-      question: "What is NamaAplikasi?",
+      question: "What is TransitPlus?",
       answer:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus earum dicta nesciunt, nisi excepturi eligendi.",
     },
     {
-      question: "What is NamaAplikasi?",
+      question: "What is TransitPlus?",
       answer:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus earum dicta nesciunt, nisi excepturi eligendi.",
     },
@@ -52,10 +52,11 @@ export default function FAQ() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 z-10 h-3/5 bg-gradient-to-b from-primary to-transparent" />
+      <div className="absolute inset-0 z-10 h-3/5 bg-gradient-to-b from-blue-600 to-transparent" />
       <div className="z-20 w-full max-w-3xl">
         <h1 className="mb-8 text-balance text-center text-4xl font-extrabold tracking-tighter text-white md:text-5xl">
-          Frequently Asked Questions about NamaAplikasi
+          <span className="inline-block">Frequently Asked Questions</span> about
+          TransitPlus
         </h1>
 
         <Accordion type="single" collapsible className="space-y-6">

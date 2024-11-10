@@ -93,7 +93,6 @@ const recommendedPromos = [
 
 export default function Points() {
   const router = useRouter();
-
   const transportTypes = ["Transjakarta", "MikroTrans", "MRT", "LRT", "KRL"];
 
   return (
@@ -111,7 +110,7 @@ export default function Points() {
 
         <Button
           onClick={() => router.back()}
-          className="absolute left-4 top-4 z-40 flex w-max items-center justify-center bg-white/20 text-white hover:bg-white/30 md:left-8 md:top-8"
+          className="absolute left-4 top-4 z-40 flex w-max items-center justify-center bg-white/20 text-white hover:bg-white/30 md:left-20 md:top-8"
         >
           <ArrowLeft className="mr-1 h-4 w-4" />
           <span>Back</span>

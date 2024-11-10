@@ -37,7 +37,7 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h2 className="text-navy-900 text-2xl font-bold">NamaAplikasi</h2>
+            <h2 className="text-navy-900 text-2xl font-bold">TransitPlus</h2>
             <p className="text-gray-600">
               Join the Commuterline Wave for a reliable and thrilling commuting
               experience
