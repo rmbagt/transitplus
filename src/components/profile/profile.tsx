@@ -4,7 +4,7 @@ import { Camera, Pencil } from "lucide-react";
 
 export function Profile() {
   return (
-    <Card className="mx-auto max-w-2xl">
+    <Card className="mx-auto w-full max-w-2xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 text-blue-900">
         <CardTitle>Personal Information</CardTitle>
         <Button variant="ghost" className="m-0 bg-blue-100 text-primary">

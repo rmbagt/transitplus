@@ -11,7 +11,7 @@ import { Profile } from "@/components/profile/profile";
 export default function ProfilePage() {
   const router = useRouter();
   return (
-    <div className="min-h-svh bg-gray-50">
+    <div className="min-h-svh max-w-[100vw] bg-gray-50">
       <div
         className="relative h-32 md:h-64"
         style={{

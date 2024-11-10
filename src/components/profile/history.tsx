@@ -78,7 +78,7 @@ export function History() {
   };
 
   return (
-    <Card className="mx-auto">
+    <Card className="mx-auto w-full">
       <CardHeader>
         <CardTitle className="text-blue-900">Travel History</CardTitle>
       </CardHeader>
