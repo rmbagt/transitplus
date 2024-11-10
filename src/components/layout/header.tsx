@@ -1,27 +1,37 @@
+"use client";
+
+import { CircleFadingPlusIcon, Menu, User, X } from "lucide-react";
 import Link from "next/link";
-import { User } from "lucide-react";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const navItems = [
+    ["Home", "/#home"],
+    ["Points", "/#points"],
+    ["Community", "/#community"],
+    ["Leaderboard", "/#leaderboard"],
+    ["Support", "/#support"],
+  ];
+
   return (
     <div className="relative">
-      <header className="fixed left-0 right-0 top-10 z-50 mx-auto max-w-7xl px-4">
+      <header className="fixed left-0 right-0 top-5 z-50 mx-auto max-w-7xl px-4 md:top-10">
         <div className="flex items-center justify-between">
           <Link
-            href="/"
-            className="rounded-full bg-blue-100/90 px-6 py-2 text-sm font-bold text-primary shadow-lg backdrop-blur-md"
+            href="/#home"
+            className="flex items-center gap-1 rounded-full bg-blue-100/90 px-6 py-2 text-sm font-bold text-primary shadow-lg backdrop-blur-md"
           >
-            Logo
+            <span className="font-black tracking-tighter">Transit</span>
+            <CircleFadingPlusIcon />
           </Link>
 
-          <nav className="rounded-full bg-blue-100/90 px-6 py-2 shadow-lg backdrop-blur-md">
+          <nav className="hidden rounded-full bg-blue-100/90 px-6 py-2 shadow-lg backdrop-blur-md md:block">
             <ul className="flex items-center gap-8">
-              {[
-                ["Home", "/#home"],
-                ["Points", "/#points"],
-                ["Community", "/#community"],
-                ["Leaderboard", "/#leaderboard"],
-                ["Support", "/#support"],
-              ].map(([label, href]) => (
+              {navItems.map(([label, href]) => (
                 <li key={label}>
                   <Link
                     href={href!}
@@ -34,14 +44,56 @@ export default function Header() {
             </ul>
           </nav>
 
-          <Link
-            href="/login"
-            className="flex items-center gap-2 rounded-full bg-blue-100/90 px-6 py-2 text-sm font-medium text-primary shadow-lg backdrop-blur-md transition-colors hover:text-blue-400"
-          >
-            Profile
-            <User className="h-5 w-5" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/login"
+              className="hidden items-center gap-2 rounded-full bg-blue-100/90 px-6 py-2 text-sm font-medium text-primary shadow-lg backdrop-blur-md transition-colors hover:text-blue-400 md:flex"
+            >
+              Profile
+              <User className="h-5 w-5" />
+            </Link>
+
+            <button
+              onClick={toggleMenu}
+              className="rounded-full bg-blue-100/90 px-6 py-2 text-sm font-medium text-primary shadow-lg backdrop-blur-md md:hidden"
+            >
+              {isMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile dropdown menu */}
+        {isMenuOpen && (
+          <nav className="mt-2 rounded-lg bg-blue-100/90 shadow-lg backdrop-blur-md md:hidden">
+            <ul className="flex flex-col py-2">
+              {navItems.map(([label, href]) => (
+                <li key={label}>
+                  <Link
+                    href={href!}
+                    className="block px-6 py-2 text-sm font-medium text-primary transition-colors hover:bg-blue-200/50 hover:text-blue-400"
+                    onClick={toggleMenu}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 px-6 py-2 text-sm font-medium text-primary transition-colors hover:bg-blue-200/50 hover:text-blue-400"
+                  onClick={toggleMenu}
+                >
+                  Profile
+                  <User className="h-5 w-5" />
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
       </header>
     </div>
   );

@@ -14,15 +14,15 @@ export default function Welcome() {
         }}
       />
       <div className="absolute bottom-0 h-[40%] w-screen bg-gradient-to-t from-[#0B53A8] via-90% to-transparent" />
-      <div className="container relative flex h-svh items-center justify-around gap-5">
-        <div className="flex flex-col">
-          <p className="text-7xl font-extrabold tracking-tighter text-background">
+      <div className="container relative flex min-h-svh flex-col items-center justify-center gap-8 px-4 py-24 md:flex-row md:justify-around md:gap-5">
+        <div className="flex flex-col text-center md:text-left">
+          <p className="text-4xl font-extrabold tracking-tighter text-background sm:text-5xl md:text-6xl lg:text-7xl">
             Ride, Earn, Thrive
           </p>
-          <p className="text-balance text-4xl font-semibold tracking-tight text-background">
+          <p className="mt-2 text-balance text-xl font-semibold tracking-tight text-background sm:text-2xl md:text-3xl lg:text-4xl">
             Your Journey to a Sustainable Future Starts Here!
           </p>
-          <p className="mt-5 max-w-prose text-balance text-xl text-background/70">
+          <p className="mt-4 max-w-prose text-balance text-base text-background/70 sm:text-lg md:text-xl">
             Users can earn points every time they choose sustainable transport
             options, like public transit or biking and can be redeemed for
             discounts at local businesses or access to community events,
@@ -30,7 +30,9 @@ export default function Welcome() {
             real-world rewards.
           </p>
         </div>
-        <TravelCard />
+        <div className="h-auto w-full max-w-md">
+          <TravelCard />
+        </div>
       </div>
     </main>
   );

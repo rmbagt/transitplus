@@ -24,7 +24,9 @@ export function Profile() {
           </div>
           <div className="space-y-2">
             <div className="text-sm text-muted-foreground">Email address</div>
-            <div className="text-lg font-medium">rafaelmarvin@gmail.com</div>
+            <div className="break-words text-lg font-medium">
+              rafaelmarvin@gmail.com
+            </div>
           </div>
           <div className="space-y-2">
             <div className="text-sm text-muted-foreground">Phone Number</div>

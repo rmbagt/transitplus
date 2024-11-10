@@ -22,8 +22,8 @@ import Link from "next/link";
 export function TravelCard() {
   const [date, setDate] = useState<Date>();
   return (
-    <Card className="w-[485px]">
-      <CardContent className="space-y-4 p-6">
+    <Card className="w-full max-w-[485px]">
+      <CardContent className="space-y-4 p-4 sm:p-6">
         <div className="w-full rounded-lg border-2 text-muted-foreground">
           <div className="flex items-center gap-2 border-b-2 p-3">
             <LocateIcon size={20} />
@@ -47,17 +47,9 @@ export function TravelCard() {
           </div>
         </div>
 
-        {/* <Button
-        variant="ghost"
-        className="absolute right-8 top-28"
-        size="icon"
-      >
-        <MoveDownIcon size={20} />
-      </Button> */}
-
         <Popover>
           <PopoverTrigger asChild>
-            <button className="spacex-2 flex w-full items-center justify-start rounded-lg border-2 bg-white p-3 text-muted-foreground">
+            <button className="flex w-full items-center justify-start rounded-lg border-2 bg-white p-3 text-muted-foreground">
               <CalendarIcon className="mr-2 h-4 w-4" />
               {date ? format(date, "PPP") : <span>Schedule Date</span>}
             </button>
@@ -72,15 +64,12 @@ export function TravelCard() {
           </PopoverContent>
         </Popover>
 
-        <div className="spacex-2 flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
+        <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
           <h3 className="text-sm font-medium">Transport</h3>
           <div className="grid h-fit w-full grid-cols-5 gap-2">
             {[
               { name: "KAI", icon: "/kai.svg" },
-              {
-                name: "TransJakarta",
-                icon: "/transjakarta.svg",
-              },
+              { name: "TransJakarta", icon: "/transjakarta.svg" },
               { name: "MRT", icon: "/mrt.svg" },
               { name: "LRT Jakarta", icon: "/lrt-jakarta.svg" },
               { name: "LRT Jabodebek", icon: "/lrt-jabodebek.svg" },
@@ -88,32 +77,35 @@ export function TravelCard() {
               <Button
                 key={transport.name}
                 variant="outline"
-                className="aspect-square h-full w-full flex-col gap-2 p-2"
+                className="aspect-square h-fit w-full flex-col gap-2 p-1 md:p-2"
               >
                 <Image
                   src={transport.icon}
                   alt={transport.name}
                   width={100}
                   height={100}
-                  className="object-contain"
+                  className="h-8 w-8 object-contain sm:h-10 sm:w-10"
                 />
+                <span className="hidden text-xs sm:inline">
+                  {transport.name}
+                </span>
               </Button>
             ))}
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="spacex-2 flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
-            <span className="text-sm font-medium">Distance</span>
-            <span className="text-sm font-bold">- km</span>
+          <div className="flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
+            <span className="text-xs font-medium sm:text-sm">Distance</span>
+            <span className="text-xs font-bold sm:text-sm">- km</span>
           </div>
-          <div className="spacex-2 flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
-            <span className="text-sm font-medium">Points</span>
-            <span className="text-sm font-bold">- pts</span>
+          <div className="flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
+            <span className="text-xs font-medium sm:text-sm">Points</span>
+            <span className="text-xs font-bold sm:text-sm">- pts</span>
           </div>
         </div>
 
-        <div className="spacex-2 flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
+        <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
           <h3 className="text-sm font-medium">Payment Methods</h3>
           <div className="grid h-fit w-full grid-cols-4 gap-2">
             {[
@@ -125,17 +117,17 @@ export function TravelCard() {
               <Button
                 key={method.name}
                 variant="outline"
-                className="aspect-square h-full w-full flex-col gap-2"
+                className="aspect-square h-fit w-full flex-col gap-1 p-1 sm:gap-2 sm:p-2"
               >
-                <method.icon className="h-10 w-10" />
-                <span className="text-xs">{method.name}</span>
+                <method.icon className="h-6 w-6 sm:h-8 sm:w-8" />
+                <span className="text-[10px] sm:text-xs">{method.name}</span>
               </Button>
             ))}
           </div>
         </div>
 
-        <Link href="/tutorial">
-          <Button className="mt-4 w-full bg-primary">Book Now</Button>
+        <Link href="/tutorial" className="block w-full">
+          <Button className="w-full bg-primary">Book Now</Button>
         </Link>
       </CardContent>
     </Card>
