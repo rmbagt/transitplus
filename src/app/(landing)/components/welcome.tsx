@@ -39,7 +39,7 @@ export default function Welcome() {
             href="/tutorial"
             className="flex items-center justify-center md:justify-start"
           >
-            <Button className="w-max rounded-full bg-gradient-to-b from-primary to-blue-400 shadow-xl transition-all hover:scale-105 hover:bg-blue-500 hover:shadow-2xl md:w-32">
+            <Button className="w-max rounded-full bg-blue-200 text-primary shadow-xl transition-all hover:scale-[1.03] hover:bg-blue-300 hover:shadow-2xl active:scale-[0.97] md:w-32">
               Get Started
             </Button>
           </Link>
