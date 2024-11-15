@@ -178,7 +178,7 @@ export default function StatisticPoints() {
               alt="Decorative illustration of statistics"
               width={500}
               height={500}
-              className="w-full max-w-md md:max-w-full"
+              className="w-full max-w-md"
             />
           </div>
         </div>
