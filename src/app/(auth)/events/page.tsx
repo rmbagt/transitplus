@@ -113,7 +113,7 @@ function EventCard({ event, isRegistered, onRegister }: EventCardProps) {
           </div>
         </div>
 
-        <div className="flex justify-start border-t pt-4">
+        <div className="flex justify-end border-t pt-4">
           <Button
             variant={isRegistered ? "outline" : "default"}
             onClick={() => onRegister(event.id)}
