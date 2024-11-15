@@ -20,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <AppSidebar />
+      <AppSidebar session={session} />
       <SidebarInset>
         <SidebarTrigger className="fixed left-4 top-4 z-40 flex size-10 items-center justify-center overflow-y-auto bg-blue-100 text-primary shadow-md hover:bg-white/30 md:left-8 md:top-8 md:hidden" />
         {children}

@@ -11,6 +11,7 @@ import {
   SidebarFooter,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import type { Session } from "next-auth";
 
 const data = {
   user: {
@@ -41,8 +42,10 @@ const data = {
 };
 
 export function AppSidebar({
+  session,
   ...props
 }: {
+  session: Session;
   props?: React.ComponentProps<typeof Sidebar>;
 }) {
   return (
@@ -53,9 +56,9 @@ export function AppSidebar({
       <SidebarFooter>
         <NavUser
           user={{
-            name: "Rafael Marvin",
-            email: "rafaelmarvin@binus.ac.id",
-            image: "/avatar.png",
+            name: session.user.name ?? "",
+            email: session.user.email ?? "",
+            image: session.user.image ?? "",
           }}
         />
       </SidebarFooter>

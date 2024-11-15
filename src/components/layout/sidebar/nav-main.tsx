@@ -2,7 +2,6 @@
 
 import { CircleFadingPlusIcon, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { HiSparkles } from "react-icons/hi2";
 
 import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
@@ -13,7 +12,6 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Label } from "@/components/ui/label";
 
 export function NavMain({
   items,
