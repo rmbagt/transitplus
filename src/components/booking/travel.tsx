@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,7 +10,8 @@ import {
   CalendarIcon,
   CreditCardIcon,
   Loader2,
-  CheckCircle,
+  WifiIcon,
+  XIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -33,11 +36,14 @@ import {
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogCancel,
+  AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { format } from "date-fns";
 import Image from "next/image";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 
 const transportOptions = [
   { name: "KAI", icon: "/kai.svg" },
@@ -47,11 +53,7 @@ const transportOptions = [
   { name: "LRT Jabodebek", icon: "/lrt-jabodebek.svg" },
 ] as const;
 
-const paymentMethods = [
-  { name: "E-Money", icon: CreditCardIcon },
-  { name: "QRIS", icon: CreditCardIcon },
-  { name: "Card", icon: CreditCardIcon },
-] as const;
+const paymentMethods = [{ name: "E-Money", icon: CreditCardIcon }] as const;
 
 const FormSchema = z.object({
   currentLocation: z.string().min(2, {
@@ -79,9 +81,11 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-export function TravelCard() {
+export default function TravelCard() {
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  const [showQRDialog, setShowQRDialog] = useState(false);
+  const [showNFCDialog, setShowNFCDialog] = useState(false);
+  const [nfcSupported, setNfcSupported] = useState<boolean | null>(null);
+  const [nfcStatus, setNfcStatus] = useState<string>("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -93,6 +97,17 @@ export function TravelCard() {
   });
 
   const { mutate, data, isPending } = api.travel.getDistance.useMutation();
+
+  useEffect(() => {
+    const checkNfcSupport = async () => {
+      if ("NDEFReader" in window) {
+        setNfcSupported(true);
+      } else {
+        setNfcSupported(false);
+      }
+    };
+    void checkNfcSupport();
+  }, []);
 
   const getLocationAddress = async (latitude: number, longitude: number) => {
     try {
@@ -107,7 +122,6 @@ export function TravelCard() {
     }
   };
 
-  // Watch both location fields
   React.useEffect(() => {
     const subscription = form.watch((value, { name }) => {
       if (
@@ -170,10 +184,37 @@ export function TravelCard() {
   };
 
   function onSubmit() {
-    toast.success("Booking Submitted", {
-      description: "Your booking has been submitted.",
-    });
+    setShowNFCDialog(true);
   }
+
+  const handleNfcScan = async () => {
+    setNfcStatus("Scanning...");
+    try {
+      const ndef = new (window as any).NDEFReader();
+      await ndef.scan();
+      setNfcStatus("Scan started");
+
+      ndef.addEventListener("readingerror", () => {
+        setNfcStatus("Cannot read data from the NFC tag. Try another one?");
+      });
+
+      ndef.addEventListener("reading", ({ message, serialNumber }) => {
+        setNfcStatus(
+          `Serial Number: ${serialNumber}\nRecords: (${message.records.length})`,
+        );
+        toast.success("NFC Scan Successful", {
+          description: "Your payment has been processed.",
+        });
+        setTimeout(() => setShowNFCDialog(false), 2000);
+      });
+    } catch (error) {
+      console.error(error);
+      setNfcStatus(`Error: ${JSON.stringify(error)}`);
+      toast.error("NFC Scan Failed", {
+        description: "Please try again or use an alternative payment method.",
+      });
+    }
+  };
 
   return (
     <>
@@ -181,7 +222,12 @@ export function TravelCard() {
         <CardContent className="space-y-4 p-4 sm:p-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="w-full rounded-lg border-2 text-muted-foreground">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full rounded-lg border-2 text-muted-foreground"
+              >
                 <div className="flex items-center gap-2 border-b-2 p-3">
                   <Button
                     type="button"
@@ -242,87 +288,104 @@ export function TravelCard() {
                     )}
                   />
                 </div>
-              </div>
+              </motion.div>
 
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            className="w-full justify-start border-2 text-left font-normal text-muted-foreground"
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Schedule Date</span>
-                            )}
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="transport"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
-                      <FormLabel className="text-sm font-medium">
-                        Transport
-                      </FormLabel>
-                      <FormControl>
-                        <div className="grid h-fit w-full grid-cols-5 gap-2">
-                          {transportOptions.map((transport) => (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <FormField
+                  control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
                             <Button
-                              key={transport.name}
-                              type="button"
                               variant="outline"
-                              onClick={() => field.onChange(transport.name)}
-                              className={`aspect-square h-fit w-full flex-col gap-2 p-1 md:p-2 ${
-                                field.value === transport.name
-                                  ? "bg-gray-300 text-muted-foreground"
-                                  : ""
-                              }`}
+                              className="w-full justify-start border-2 text-left font-normal text-muted-foreground"
                             >
-                              <Image
-                                src={transport.icon}
-                                alt={transport.name}
-                                width={100}
-                                height={100}
-                                className="h-8 w-8 rounded-md object-contain sm:h-10 sm:w-10"
-                              />
-                              <span className="hidden text-[8px] sm:inline">
-                                {transport.name}
-                              </span>
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Schedule Date</span>
+                              )}
                             </Button>
-                          ))}
-                        </div>
-                      </FormControl>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
                       <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <FormField
+                  control={form.control}
+                  name="transport"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
+                        <FormLabel className="text-sm font-medium">
+                          Transport
+                        </FormLabel>
+                        <FormControl>
+                          <div className="grid h-fit w-full grid-cols-5 gap-2">
+                            {transportOptions.map((transport) => (
+                              <Button
+                                key={transport.name}
+                                type="button"
+                                variant="outline"
+                                onClick={() => field.onChange(transport.name)}
+                                className={`aspect-square h-fit w-full flex-col gap-2 p-1 md:p-2 ${
+                                  field.value === transport.name
+                                    ? "bg-gray-300 text-muted-foreground"
+                                    : ""
+                                }`}
+                              >
+                                <Image
+                                  src={transport.icon}
+                                  alt={transport.name}
+                                  width={100}
+                                  height={100}
+                                  className="h-8 w-8 rounded-md object-contain sm:h-10 sm:w-10"
+                                />
+                                <span className="hidden text-[8px] sm:inline">
+                                  {transport.name}
+                                </span>
+                              </Button>
+                            ))}
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="grid grid-cols-2 gap-4"
+              >
                 <div className="flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
                   <span className="text-xs font-medium sm:text-sm">
                     Distance
@@ -345,68 +408,111 @@ export function TravelCard() {
                     </span>
                   )}
                 </div>
-              </div>
+              </motion.div>
 
-              <FormField
-                control={form.control}
-                name="paymentMethod"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
-                      <FormLabel className="text-sm font-medium">
-                        Payment Methods
-                      </FormLabel>
-                      <FormControl>
-                        <div className="grid h-fit w-full grid-cols-3 gap-2">
-                          {paymentMethods.map((method) => (
-                            <Button
-                              key={method.name}
-                              type="button"
-                              variant="outline"
-                              onClick={() => field.onChange(method.name)}
-                              className={`h-fit w-full flex-col gap-1 sm:gap-2 sm:p-2 ${
-                                field.value === method.name
-                                  ? "bg-gray-300 text-muted-foreground"
-                                  : ""
-                              }`}
-                            >
-                              <method.icon className="h-6 w-6 sm:h-8 sm:w-8" />
-                              <span className="text-[10px] sm:text-xs">
-                                {method.name}
-                              </span>
-                            </Button>
-                          ))}
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </div>
-                  </FormItem>
-                )}
-              />
-
-              <Button
-                type="submit"
-                className="w-full bg-primary"
-                disabled={isPending}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
               >
-                {isPending ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : null}
-                {isPending ? "Booking..." : "Book Now"}
-              </Button>
+                <FormField
+                  control={form.control}
+                  name="paymentMethod"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
+                        <FormLabel className="text-sm font-medium">
+                          Payment Methods
+                        </FormLabel>
+                        <FormControl>
+                          <div className="grid h-fit w-full gap-2">
+                            {paymentMethods.map((method) => (
+                              <Button
+                                key={method.name}
+                                type="button"
+                                variant="outline"
+                                onClick={() => field.onChange(method.name)}
+                                className={`h-fit w-full flex-col gap-1 sm:gap-2 sm:p-2 ${
+                                  field.value === method.name
+                                    ? "bg-gray-300 text-muted-foreground"
+                                    : ""
+                                }`}
+                              >
+                                <method.icon className="h-6 w-6 sm:h-8 sm:w-8" />
+                                <span className="text-[10px] sm:text-xs">
+                                  {method.name}
+                                </span>
+                              </Button>
+                            ))}
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <Button
+                  type="submit"
+                  className="w-full bg-primary"
+                  disabled={isPending}
+                >
+                  {isPending ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
+                  {isPending ? "Claiming..." : "Claim Now"}
+                </Button>
+              </motion.div>
             </form>
           </Form>
         </CardContent>
       </Card>
-      <AlertDialog open={showQRDialog} onOpenChange={setShowQRDialog}>
+      <AlertDialog open={showNFCDialog} onOpenChange={setShowNFCDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Scan QR Code to Pay</AlertDialogTitle>
+            <AlertDialogTitle>Scan with NFC to Pay</AlertDialogTitle>
             <AlertDialogDescription>
-              Please scan the QR code below to complete your payment.
+              {nfcSupported
+                ? "Please tap your NFC-enabled device to complete the payment."
+                : "Your device does not support NFC. Please use an alternative payment method."}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="flex flex-col items-center justify-center space-y-4"></div>
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <AnimatePresence>
+              {nfcSupported ? (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <WifiIcon className="h-24 w-24 text-blue-500" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <XIcon className="h-24 w-24 text-red-500" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <div className="text-center text-sm">{nfcStatus}</div>
+          </div>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          {nfcSupported && (
+            <>
+              <AlertDialogAction onClick={handleNfcScan}>
+                Scan NFC
+              </AlertDialogAction>
+            </>
+          )}
         </AlertDialogContent>
       </AlertDialog>
     </>
