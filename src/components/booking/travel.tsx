@@ -1,5 +1,4 @@
-"use client";
-
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,6 +7,7 @@ import {
   MapPinIcon,
   CalendarIcon,
   CreditCardIcon,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -72,6 +72,8 @@ const FormSchema = z.object({
 type FormValues = z.infer<typeof FormSchema>;
 
 export function TravelCard() {
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -81,7 +83,65 @@ export function TravelCard() {
     },
   });
 
-  const { mutate, data } = api.travel.getDistance.useMutation();
+  const { mutate, data, isPending } = api.travel.getDistance.useMutation();
+
+  const getLocationAddress = async (latitude: number, longitude: number) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
+      );
+      const data = (await response.json()) as { display_name: string };
+      return data.display_name;
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return null;
+    }
+  };
+
+  const handleGetCurrentLocation = () => {
+    setIsLoadingLocation(true);
+
+    if (!navigator.geolocation) {
+      toast.error("Geolocation is not supported by your browser");
+      setIsLoadingLocation(false);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        getLocationAddress(latitude, longitude)
+          .then((address) => {
+            if (address) {
+              form.setValue("currentLocation", address);
+              toast.success("Location detected", {
+                description: "Your current location has been set.",
+              });
+            } else {
+              toast.error("Could not determine address");
+            }
+          })
+          .catch(() => {
+            toast.error("Error getting address");
+          })
+          .finally(() => {
+            setIsLoadingLocation(false);
+          });
+      },
+      (error: GeolocationPositionError) => {
+        console.error("Error getting location:", error);
+        toast.error("Error getting location", {
+          description: error.message,
+        });
+        setIsLoadingLocation(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      },
+    );
+  };
 
   function onSubmit(formData: FormValues) {
     mutate({
@@ -101,7 +161,20 @@ export function TravelCard() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="w-full rounded-lg border-2 text-muted-foreground">
               <div className="flex items-center gap-2 border-b-2 p-3">
-                <LocateIcon size={20} />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-5 w-5 p-0"
+                  onClick={handleGetCurrentLocation}
+                  disabled={isLoadingLocation}
+                >
+                  {isLoadingLocation ? (
+                    <Loader2 size={20} className="animate-spin" />
+                  ) : (
+                    <LocateIcon size={20} />
+                  )}
+                </Button>
                 <FormField
                   control={form.control}
                   name="currentLocation"
@@ -114,6 +187,7 @@ export function TravelCard() {
                             {...field}
                             placeholder="Choose your current location"
                             className="h-fit rounded-none border-0 bg-transparent p-0 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-0"
+                            onClick={handleGetCurrentLocation}
                           />
                         </div>
                       </FormControl>
@@ -229,15 +303,23 @@ export function TravelCard() {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
                 <span className="text-xs font-medium sm:text-sm">Distance</span>
-                <span className="text-xs font-bold sm:text-sm">
-                  {data?.object.distance} km
-                </span>
+                {isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <span className="text-xs font-bold sm:text-sm">
+                    {data?.object.distance} km
+                  </span>
+                )}
               </div>
               <div className="flex w-full items-center justify-between gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
                 <span className="text-xs font-medium sm:text-sm">Points</span>
-                <span className="text-xs font-bold sm:text-sm">
-                  {(data?.object.distance ?? 0) * 10} pts
-                </span>
+                {isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <span className="text-xs font-bold sm:text-sm">
+                    {(data?.object.distance ?? 0) * 10} pts
+                  </span>
+                )}
               </div>
             </div>
 
@@ -278,8 +360,15 @@ export function TravelCard() {
               )}
             />
 
-            <Button type="submit" className="w-full bg-primary">
-              Book Now
+            <Button
+              type="submit"
+              className="w-full bg-primary"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
+              {isPending ? "Booking..." : "Book Now"}
             </Button>
           </form>
         </Form>
