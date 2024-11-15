@@ -1,9 +1,12 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Crown, Coins, Gift, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function StatisticPoints() {
   return (
@@ -140,23 +143,55 @@ export default function StatisticPoints() {
                       color: "bg-green-200",
                       labelColor: "text-green-500",
                     },
-                  ].map((day) => (
-                    <div key={day.day} className="flex flex-col items-center">
+                  ].map((day, index) => (
+                    <motion.div
+                      key={day.day}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ margin: "-100px" }}
+                      className="flex flex-col items-center"
+                    >
                       <div className="relative w-full flex-1">
-                        <div
+                        <motion.div
+                          variants={{
+                            hidden: { height: 0 },
+                            visible: { height: day.height },
+                          }}
+                          transition={{
+                            duration: 0.5,
+                            delay: index * 0.1,
+                            ease: "easeOut",
+                          }}
                           className={`absolute bottom-0 w-full rounded-lg ${day.color}`}
-                          style={{ height: day.height }}
                         />
-                        <div
+                        <motion.div
+                          variants={{
+                            hidden: { opacity: 0 },
+                            visible: { opacity: 1 },
+                          }}
+                          transition={{
+                            duration: 0.3,
+                            delay: 0.5 + index * 0.1,
+                          }}
                           className={`absolute bottom-0 w-full p-1 text-center text-[0.5rem] font-bold sm:text-sm ${day.labelColor}`}
                         >
                           {day.level}
-                        </div>
+                        </motion.div>
                       </div>
-                      <div className="mt-2 text-xs text-muted-foreground sm:text-sm">
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0 },
+                          visible: { opacity: 1 },
+                        }}
+                        transition={{
+                          duration: 0.3,
+                          delay: 0.7 + index * 0.1,
+                        }}
+                        className="mt-2 text-xs text-muted-foreground sm:text-sm"
+                      >
                         {day.day}
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   ))}
                 </div>
               </CardContent>

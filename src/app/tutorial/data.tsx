@@ -15,7 +15,7 @@ export const TransportItems = [
   {
     name: "LRT",
     icon: <Train className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train1.svg",
+    image: "/tutorial-lrt.svg",
   },
   {
     name: "KRL",
@@ -25,7 +25,7 @@ export const TransportItems = [
   {
     name: "Mikrotrans",
     icon: <Bus className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train3.svg",
+    image: "/tutorial-tj.svg",
   },
 ];
 
