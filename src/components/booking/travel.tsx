@@ -12,6 +12,7 @@ import {
   Loader2,
   WifiIcon,
   XIcon,
+  CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -84,8 +85,10 @@ type FormValues = z.infer<typeof FormSchema>;
 export function TravelCard() {
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
   const [showNFCDialog, setShowNFCDialog] = useState(false);
-  const [nfcSupported, setNfcSupported] = useState<boolean | null>(null);
-  const [nfcStatus, setNfcStatus] = useState<string>("");
+  const [nfcSupported, setNfcSupported] = useState<boolean | null>(true);
+  const [nfcStatus, setNfcStatus] = useState<
+    "idle" | "scanning" | "success" | "error"
+  >("idle");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -108,6 +111,12 @@ export function TravelCard() {
     };
     void checkNfcSupport();
   }, []);
+
+  useEffect(() => {
+    if (showNFCDialog && nfcSupported) {
+      void handleNfcScan();
+    }
+  }, [showNFCDialog, nfcSupported]);
 
   const getLocationAddress = async (latitude: number, longitude: number) => {
     try {
@@ -188,33 +197,37 @@ export function TravelCard() {
   }
 
   const handleNfcScan = async () => {
-    setNfcStatus("Scanning...");
+    if (!nfcSupported) return;
+
+    setNfcStatus("scanning");
     try {
       if (window.NDEFReader) {
         const ndef = new (window.NDEFReader as unknown as typeof NDEFReader)();
         await ndef.scan();
-        setNfcStatus("Scan started");
 
         ndef.addEventListener("readingerror", () => {
-          setNfcStatus("Cannot read data from the NFC tag. Try another one?");
+          setNfcStatus("error");
+          toast.error("NFC Scan Failed", {
+            description: "Cannot read data from the NFC tag. Try another one?",
+          });
         });
 
-        ndef.addEventListener("reading", (event) => {
-          const nfcEvent = event as NDEFReadingEvent;
-          setNfcStatus(
-            `Serial Number: ${nfcEvent.serialNumber}\nRecords: (${nfcEvent.message.records.length})`,
-          );
+        ndef.addEventListener("reading", () => {
+          setNfcStatus("success");
           toast.success("NFC Scan Successful", {
             description: "Your payment has been processed.",
           });
           setTimeout(() => setShowNFCDialog(false), 2000);
         });
       } else {
-        setNfcStatus("NDEFReader is not available in this environment.");
+        setNfcStatus("error");
+        toast.error("NFC Error", {
+          description: "NDEFReader is not available in this environment.",
+        });
       }
     } catch (error) {
       console.error(error);
-      setNfcStatus(`Error: ${JSON.stringify(error)}`);
+      setNfcStatus("error");
       toast.error("NFC Scan Failed", {
         description: "Please try again or use an alternative payment method.",
       });
@@ -479,7 +492,7 @@ export function TravelCard() {
         </CardContent>
       </Card>
       <AlertDialog open={showNFCDialog} onOpenChange={setShowNFCDialog}>
-        <AlertDialogContent className="max-w-xs">
+        <AlertDialogContent className="max-w-xs rounded-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Scan with NFC to Pay</AlertDialogTitle>
             <AlertDialogDescription>
@@ -489,17 +502,40 @@ export function TravelCard() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="flex flex-col items-center justify-center space-y-4">
-            <AnimatePresence>
-              {nfcSupported ? (
+            <AnimatePresence mode="wait">
+              {nfcSupported && nfcStatus === "idle" && (
                 <motion.div
+                  key="wifi"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
                 >
                   <WifiIcon className="h-24 w-24 text-blue-500" />
                 </motion.div>
-              ) : (
+              )}
+              {nfcSupported && nfcStatus === "scanning" && (
                 <motion.div
+                  key="scanning"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <Loader2 className="h-24 w-24 animate-spin text-blue-500" />
+                </motion.div>
+              )}
+              {nfcSupported && nfcStatus === "success" && (
+                <motion.div
+                  key="success"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <CheckCircle className="h-24 w-24 text-green-500" />
+                </motion.div>
+              )}
+              {(nfcStatus === "error" || !nfcSupported) && (
+                <motion.div
+                  key="error"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
@@ -508,15 +544,18 @@ export function TravelCard() {
                 </motion.div>
               )}
             </AnimatePresence>
-            <div className="text-center text-sm">{nfcStatus}</div>
+            <div className="text-center text-sm">
+              {nfcStatus === "idle" && "Ready to scan"}
+              {nfcStatus === "scanning" && "Scanning..."}
+              {nfcStatus === "success" && "Payment successful!"}
+              {nfcStatus === "error" && "Scan failed. Please try again."}
+            </div>
           </div>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          {nfcSupported && (
-            <>
-              <AlertDialogAction onClick={handleNfcScan}>
-                Scan NFC
-              </AlertDialogAction>
-            </>
+          {nfcSupported && nfcStatus === "idle" && (
+            <AlertDialogAction onClick={handleNfcScan}>
+              Start NFC Scan
+            </AlertDialogAction>
           )}
         </AlertDialogContent>
       </AlertDialog>
