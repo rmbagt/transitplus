@@ -22,7 +22,10 @@ export default function Welcome() {
       <div className="container relative flex min-h-svh flex-col items-center justify-center gap-8 px-4 py-24 md:flex-row md:justify-around md:gap-5">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col text-center md:text-left">
-            <RandomText />
+            {/* <RandomText /> */}
+            <p className="text-4xl font-extrabold tracking-tighter text-background sm:text-5xl md:text-6xl lg:text-7xl">
+              Ride, Earn, Thrive
+            </p>
             <p className="mt-2 text-balance text-xl font-semibold tracking-tight text-background sm:text-2xl md:text-3xl lg:text-4xl">
               Your Journey to a Sustainable Future Starts Here!
             </p>
