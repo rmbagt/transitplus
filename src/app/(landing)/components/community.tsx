@@ -59,13 +59,16 @@ export default function Community() {
       </h1>
 
       <Carousel className="z-10 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
-        <CarouselContent className="-ml-2 sm:-ml-4">
+        <CarouselContent className="-ml-2 py-2 sm:-ml-4">
           {events.map((event, index) => (
             <CarouselItem
               key={index}
               className="basis-full pl-2 sm:basis-1/2 sm:pl-4 lg:basis-1/3"
             >
-              <Card className="overflow-hidden border-none shadow-lg">
+              <Card
+                className="group cursor-pointer overflow-hidden border-none shadow-lg transition-all duration-300 hover:-translate-y-2 hover:brightness-95"
+                onClick={() => (window.location.href = "/events")}
+              >
                 <CardContent className="p-0">
                   <div className="relative">
                     <Image
