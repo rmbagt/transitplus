@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,15 +9,27 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import WelcomeCard from "@/components/welcome-card";
+import { signIn } from "next-auth/react";
+import type { Session } from "next-auth";
 
-export default function LoginPage() {
+export default function LoginPage({ session }: { session: Session | null }) {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
-  function handleLogin() {
-    setAuthenticated(true);
+  async function handleLogin() {
+    const result = await signIn("google");
+    if (result?.error) {
+      setAuthenticated(true);
+    } else if (result?.error) {
+      console.error("Login failed:", result.error);
+      setAuthenticated(false);
+    } else setAuthenticated(false);
   }
+
+  useEffect(() => {
+    if (session) setAuthenticated(true);
+  }, [session]);
 
   return (
     <div className="relative min-h-svh w-full">
@@ -32,7 +44,7 @@ export default function LoginPage() {
 
       {/* Back Button */}
       <Button
-        onClick={() => router.back()}
+        onClick={() => router.push("/")}
         className="relative left-1 top-1 z-40 flex w-max items-center bg-transparent p-4 text-gray-600 hover:bg-transparent hover:text-gray-800 md:left-5 md:top-5"
       >
         <ArrowLeft className="mr-1 h-4 w-4" />
