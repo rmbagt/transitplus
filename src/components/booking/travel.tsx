@@ -81,7 +81,7 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-export default function TravelCard() {
+export function TravelCard() {
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
   const [showNFCDialog, setShowNFCDialog] = useState(false);
   const [nfcSupported, setNfcSupported] = useState<boolean | null>(null);
@@ -190,23 +190,28 @@ export default function TravelCard() {
   const handleNfcScan = async () => {
     setNfcStatus("Scanning...");
     try {
-      const ndef = new (window as any).NDEFReader();
-      await ndef.scan();
-      setNfcStatus("Scan started");
+      if (window.NDEFReader) {
+        const ndef = new (window.NDEFReader as unknown as typeof NDEFReader)();
+        await ndef.scan();
+        setNfcStatus("Scan started");
 
-      ndef.addEventListener("readingerror", () => {
-        setNfcStatus("Cannot read data from the NFC tag. Try another one?");
-      });
-
-      ndef.addEventListener("reading", ({ message, serialNumber }) => {
-        setNfcStatus(
-          `Serial Number: ${serialNumber}\nRecords: (${message.records.length})`,
-        );
-        toast.success("NFC Scan Successful", {
-          description: "Your payment has been processed.",
+        ndef.addEventListener("readingerror", () => {
+          setNfcStatus("Cannot read data from the NFC tag. Try another one?");
         });
-        setTimeout(() => setShowNFCDialog(false), 2000);
-      });
+
+        ndef.addEventListener("reading", (event) => {
+          const nfcEvent = event as NDEFReadingEvent;
+          setNfcStatus(
+            `Serial Number: ${nfcEvent.serialNumber}\nRecords: (${nfcEvent.message.records.length})`,
+          );
+          toast.success("NFC Scan Successful", {
+            description: "Your payment has been processed.",
+          });
+          setTimeout(() => setShowNFCDialog(false), 2000);
+        });
+      } else {
+        setNfcStatus("NDEFReader is not available in this environment.");
+      }
     } catch (error) {
       console.error(error);
       setNfcStatus(`Error: ${JSON.stringify(error)}`);
@@ -474,7 +479,7 @@ export default function TravelCard() {
         </CardContent>
       </Card>
       <AlertDialog open={showNFCDialog} onOpenChange={setShowNFCDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-xs">
           <AlertDialogHeader>
             <AlertDialogTitle>Scan with NFC to Pay</AlertDialogTitle>
             <AlertDialogDescription>
