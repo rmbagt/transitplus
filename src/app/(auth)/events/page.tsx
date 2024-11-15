@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const LOCATIONS = [
   "Jakarta Barat",
@@ -25,6 +26,7 @@ const EVENTS = [
     day: "Fri",
     date: 1,
     title: "Travel around Jakarta",
+    image: "/travel-around-jakarta.svg",
     location: "International Monument",
     time: "09:00 - 13:00",
     capacity: "50 person",
@@ -35,6 +37,7 @@ const EVENTS = [
     day: "Sat",
     date: 2,
     title: "Cultural Exhibition",
+    image: "/art-exhibition.svg",
     location: "National Museum",
     time: "10:00 - 16:00",
     capacity: "100 person",
@@ -45,12 +48,84 @@ const EVENTS = [
     day: "Sun",
     date: 3,
     title: "Food Festival",
+    image: "/community-meetup.svg",
     location: "Central Park",
     time: "11:00 - 20:00",
     capacity: "200 person",
     registered: false,
   },
 ];
+
+interface EventCardProps {
+  event: {
+    id: number;
+    day: string;
+    date: number;
+    title: string;
+    image: string;
+    location: string;
+    time: string;
+    capacity: string;
+    registered: boolean;
+  };
+  isRegistered: boolean;
+  onRegister: (id: number) => void;
+}
+
+function EventCard({ event, isRegistered, onRegister }: EventCardProps) {
+  return (
+    <div className="overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md">
+      <div className="relative aspect-video w-full overflow-hidden bg-gray-100 md:aspect-[21/9]">
+        <Image
+          src={event.image}
+          alt={event.title}
+          width={800}
+          height={400}
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            e.currentTarget.src = "/api/placeholder/800/400";
+          }}
+        />
+        <div className="absolute left-4 top-4 flex h-16 w-16 flex-col items-center justify-center rounded-lg bg-white/90 text-center shadow-sm backdrop-blur-sm">
+          <div className="text-sm font-medium text-muted-foreground">
+            {event.day}
+          </div>
+          <div className="text-2xl font-bold text-primary">{event.date}</div>
+        </div>
+      </div>
+
+      <div className="space-y-4 p-4">
+        <div>
+          <h3 className="text-xl font-semibold text-primary">{event.title}</h3>
+          <div className="mt-2 flex flex-wrap gap-4">
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4" />
+              {event.location}
+            </div>
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              {event.time}
+            </div>
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Users className="h-4 w-4" />
+              {event.capacity}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-start border-t pt-4">
+          <Button
+            variant={isRegistered ? "outline" : "default"}
+            onClick={() => onRegister(event.id)}
+            className="w-full md:w-auto"
+          >
+            {isRegistered ? "Unregister" : "Register"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Events() {
   const router = useRouter();
@@ -109,7 +184,11 @@ export default function Events() {
       <div
         key={i}
         onClick={() => day && handleDayClick(day)}
-        className={`flex aspect-square cursor-pointer items-center justify-center rounded-md text-sm ${day ? "hover:bg-gray-100" : ""} ${selectedDay === day ? "bg-muted text-white" : ""} ${!day ? "text-gray-300" : ""}`}
+        className={`flex aspect-square cursor-pointer items-center justify-center rounded-md text-sm ${
+          day ? "hover:bg-gray-100" : ""
+        } ${selectedDay === day ? "bg-muted text-blue-600" : ""} ${
+          !day ? "text-gray-300" : ""
+        }`}
       >
         {day}
       </div>
@@ -197,53 +276,19 @@ export default function Events() {
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-          <div className="space-y-4">
+        <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
+          <div className="space-y-6">
             {EVENTS.map((event) => (
-              <div key={event.id} className="rounded-lg border bg-white p-4">
-                <div className="mb-4 flex items-baseline gap-4">
-                  <div className="text-center">
-                    <div className="text-sm font-medium text-muted-foreground">
-                      {event.day}
-                    </div>
-                    <div className="text-2xl font-bold text-primary">
-                      {event.date}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-primary">
-                      {event.title}
-                    </h3>
-                    <div className="mt-2 flex flex-wrap gap-4">
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
-                        {event.location}
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        {event.time}
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Users className="h-4 w-4" />
-                        {event.capacity}
-                      </div>
-                    </div>
-                  </div>
-                  <Button
-                    className="ml-auto"
-                    variant={
-                      registeredEvents.has(event.id) ? "outline" : "default"
-                    }
-                    onClick={() => handleRegister(event.id)}
-                  >
-                    {registeredEvents.has(event.id) ? "Unregister" : "Register"}
-                  </Button>
-                </div>
-              </div>
+              <EventCard
+                key={event.id}
+                event={event}
+                isRegistered={registeredEvents.has(event.id)}
+                onRegister={handleRegister}
+              />
             ))}
           </div>
 
-          <div className="rounded-lg border bg-white p-4">
+          <div className="h-fit rounded-lg border bg-white p-4 shadow-sm">
             <div className="grid grid-cols-7 gap-2 text-center">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
                 (day, i) => (
