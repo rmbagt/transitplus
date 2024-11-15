@@ -49,7 +49,7 @@ export default function Community() {
       className="mx-auto flex h-fit w-full flex-col items-center p-4 py-12 sm:p-6 sm:py-16 md:p-10 md:py-20"
       style={{
         backgroundImage: "url('/login-bg.svg')",
-        backgroundSize: "contain",
+        backgroundSize: "fill",
         backgroundPositionY: "bottom",
         backgroundRepeat: "no-repeat",
       }}
