@@ -8,6 +8,8 @@ export const TransportRewardCard = ({
   discount = 10000,
   isNew = false,
   variant = "default",
+  isRedeemed = false,
+  onRedeem,
 }: {
   name: string;
   icon: string;
@@ -15,6 +17,8 @@ export const TransportRewardCard = ({
   discount?: number;
   isNew?: boolean;
   variant?: "default" | "light";
+  isRedeemed?: boolean;
+  onRedeem?: () => void;
 }) => {
   const bgClass =
     variant === "light"
@@ -72,9 +76,13 @@ export const TransportRewardCard = ({
       </div>
 
       <Button
-        className={`mt-2 w-full rounded-full px-4 py-1.5 text-sm font-semibold transition-colors md:w-auto md:px-6 md:py-2 md:text-base ${buttonClass}`}
+        onClick={onRedeem}
+        disabled={isRedeemed}
+        className={`mt-2 w-full rounded-full px-4 py-1.5 text-sm font-semibold transition-colors md:w-auto md:px-6 md:py-2 md:text-base ${buttonClass} ${
+          isRedeemed ? "cursor-not-allowed opacity-50" : ""
+        }`}
       >
-        Redeem
+        {isRedeemed ? "Redeemed" : "Redeem"}
       </Button>
     </div>
   );

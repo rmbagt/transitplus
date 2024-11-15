@@ -14,6 +14,7 @@ import {
   Search,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const popularPromos = [
   {
@@ -93,7 +94,12 @@ const recommendedPromos = [
 
 export default function Points() {
   const router = useRouter();
+  const [redeemed, setRedeemed] = useState<string[]>([]);
   const transportTypes = ["Transjakarta", "MikroTrans", "MRT", "LRT", "KRL"];
+
+  const handleRedeemed = (coupon: string) => {
+    setRedeemed((prev) => [...prev, coupon]);
+  };
 
   return (
     <div className="relative min-h-svh bg-gray-50">
@@ -187,7 +193,7 @@ export default function Points() {
                 <Search className="absolute left-3 h-4 w-4 text-primary/60 md:h-5 md:w-5" />
                 <Input
                   placeholder="Search for promo or category"
-                  className="bg-blue-100 pl-8 text-sm text-primary placeholder:text-primary/60 md:pl-10 md:text-base"
+                  className="bg-blue-100 pl-8 text-sm text-primary placeholder:text-primary/60 focus-visible:ring-blue-600 focus-visible:ring-offset-2 md:pl-10 md:text-base"
                 />
               </form>
             </div>
@@ -203,6 +209,8 @@ export default function Points() {
                     points={promo.points}
                     discount={promo.discount}
                     isNew={promo.isNew}
+                    isRedeemed={redeemed.includes(promo.name)}
+                    onRedeem={() => handleRedeemed(promo.name)}
                   />
                 </div>
               ))}
@@ -221,6 +229,13 @@ export default function Points() {
                 size="icon"
                 variant="outline"
                 className="h-8 w-8 rounded-xl md:h-10 md:w-10"
+                onClick={() => {
+                  const container =
+                    document.getElementById("recommended-scroll");
+                  if (container) {
+                    container.scrollBy({ left: -300, behavior: "smooth" });
+                  }
+                }}
               >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
@@ -228,13 +243,23 @@ export default function Points() {
                 size="icon"
                 variant="outline"
                 className="h-8 w-8 rounded-xl md:h-10 md:w-10"
+                onClick={() => {
+                  const container =
+                    document.getElementById("recommended-scroll");
+                  if (container) {
+                    container.scrollBy({ left: 300, behavior: "smooth" });
+                  }
+                }}
               >
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
+          <div
+            id="recommended-scroll"
+            className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-4"
+          >
             <div className="flex min-w-max gap-4 px-4">
               {recommendedPromos.map((promo, idx) => (
                 <div key={idx} className="snap-center">
@@ -245,6 +270,8 @@ export default function Points() {
                     discount={promo.discount}
                     isNew={promo.isNew}
                     variant="light"
+                    isRedeemed={redeemed.includes(promo.name)}
+                    onRedeem={() => handleRedeemed(promo.name)}
                   />
                 </div>
               ))}
