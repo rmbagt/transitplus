@@ -1,9 +1,11 @@
+import { getServerAuthSession } from "@/server/auth";
 import LoginPageClient from "./page.client";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getServerAuthSession();
   return (
     <div className="h-svh">
-      <LoginPageClient />
+      <LoginPageClient session={session} />
     </div>
   );
 }

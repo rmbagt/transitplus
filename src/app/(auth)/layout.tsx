@@ -4,14 +4,19 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { getServerAuthSession } from "@/server/auth";
 import "@/styles/globals.css";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const cookieStore = cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
+  const session = await getServerAuthSession();
+
+  if (!session) redirect("/login");
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
