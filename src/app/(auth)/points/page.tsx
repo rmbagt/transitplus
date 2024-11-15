@@ -11,10 +11,19 @@ import {
   AwardIcon,
   Crown,
   DatabaseIcon,
+  Lock,
   Search,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+// Define rank types and levels
+const RANKS = {
+  BRONZE: { level: 1, name: "Bronze" },
+  SILVER: { level: 2, name: "Silver" },
+  GOLD: { level: 3, name: "Gold" },
+  PLATINUM: { level: 4, name: "Platinum" },
+};
 
 const popularPromos = [
   {
@@ -23,6 +32,7 @@ const popularPromos = [
     points: 2500,
     discount: 25000,
     isNew: true,
+    requiredRank: RANKS.SILVER,
   },
   {
     name: "TransJakarta Daily",
@@ -30,6 +40,7 @@ const popularPromos = [
     points: 1500,
     discount: 15000,
     isNew: false,
+    requiredRank: RANKS.BRONZE,
   },
   {
     name: "MRT Off-Peak",
@@ -37,6 +48,7 @@ const popularPromos = [
     points: 2000,
     discount: 20000,
     isNew: false,
+    requiredRank: RANKS.GOLD,
   },
   {
     name: "LRT Jakarta Pass",
@@ -44,6 +56,7 @@ const popularPromos = [
     points: 1800,
     discount: 18000,
     isNew: false,
+    requiredRank: RANKS.BRONZE,
   },
   {
     name: "LRT Jabodebek Express",
@@ -51,6 +64,7 @@ const popularPromos = [
     points: 3000,
     discount: 30000,
     isNew: false,
+    requiredRank: RANKS.SILVER,
   },
 ];
 
@@ -61,6 +75,7 @@ const recommendedPromos = [
     points: 8000,
     discount: 100000,
     isNew: true,
+    requiredRank: RANKS.PLATINUM,
   },
   {
     name: "TransJakarta Weekly",
@@ -68,6 +83,7 @@ const recommendedPromos = [
     points: 4500,
     discount: 50000,
     isNew: false,
+    requiredRank: RANKS.GOLD,
   },
   {
     name: "KRL Commuter Plus",
@@ -75,6 +91,7 @@ const recommendedPromos = [
     points: 6000,
     discount: 75000,
     isNew: false,
+    requiredRank: RANKS.SILVER,
   },
   {
     name: "LRT Jakarta Premium",
@@ -82,6 +99,7 @@ const recommendedPromos = [
     points: 5500,
     discount: 65000,
     isNew: false,
+    requiredRank: RANKS.GOLD,
   },
   {
     name: "LRT Jabodebek Gold",
@@ -89,12 +107,65 @@ const recommendedPromos = [
     points: 7000,
     discount: 85000,
     isNew: false,
+    requiredRank: RANKS.PLATINUM,
   },
 ];
+
+interface TransportCardProps {
+  name: string;
+  icon: string;
+  points: number;
+  discount: number;
+  isNew: boolean;
+  variant?: "default" | "light";
+  isRedeemed?: boolean;
+  onRedeem?: () => void;
+  requiredRank: { level: number; name: string };
+  currentRank: { level: number; name: string };
+}
+
+const RankLockedTransportCard = ({
+  name,
+  icon,
+  points,
+  discount,
+  isNew,
+  variant,
+  isRedeemed,
+  onRedeem,
+  requiredRank,
+  currentRank,
+}: TransportCardProps) => {
+  const isLocked = currentRank.level < requiredRank.level;
+
+  return (
+    <div className="relative">
+      <TransportRewardCard
+        name={name}
+        icon={icon}
+        points={points}
+        discount={discount}
+        isNew={isNew}
+        variant={variant}
+        isRedeemed={isRedeemed}
+        onRedeem={isLocked ? undefined : onRedeem}
+      />
+      {isLocked && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-black/60 backdrop-blur-sm">
+          <Lock className="mb-2 h-8 w-8 text-white" />
+          <p className="text-center text-sm font-medium text-white">
+            Unlock at {requiredRank.name} Rank
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default function Points() {
   const router = useRouter();
   const [redeemed, setRedeemed] = useState<string[]>([]);
+  const [currentRank] = useState(RANKS.SILVER); // Current user's rank
   const transportTypes = ["Transjakarta", "MikroTrans", "MRT", "LRT", "KRL"];
 
   const handleRedeemed = (coupon: string) => {
@@ -161,6 +232,17 @@ export default function Points() {
       </div>
 
       <div className="container relative -top-16 mx-auto w-screen rounded-t-xl bg-white p-4 md:-top-24 md:p-6 lg:-top-32 lg:rounded-t-[4rem] lg:p-10">
+        {/* Search Bar */}
+        <div className="relative my-4 w-full justify-self-center">
+          <form className="flex items-center">
+            <Search className="absolute left-3 h-4 w-4 text-primary/60 md:h-5 md:w-5" />
+            <Input
+              placeholder="Search for promo or category"
+              className="bg-blue-100 pl-8 text-sm text-primary placeholder:text-primary/60 focus-visible:ring-blue-600 focus-visible:ring-offset-2 md:pl-10 md:text-base"
+            />
+          </form>
+        </div>
+
         {/* Points and Redeem Section */}
         <Card className="mb-8 w-full rounded-2xl md:absolute md:-top-24 md:right-8 md:w-[350px] lg:right-16 lg:w-[450px]">
           <CardContent className="space-y-4 p-4">
@@ -170,7 +252,7 @@ export default function Points() {
               </div>
               <div className="flex w-full justify-between">
                 <div className="flex w-fit items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-bold text-primary md:px-3 md:text-sm">
-                  Silver (Level 2)
+                  {currentRank.name} (Level {currentRank.level})
                 </div>
               </div>
             </div>
@@ -184,31 +266,50 @@ export default function Points() {
 
         {/* Popular Section */}
         <div className="space-y-6 md:space-y-8">
-          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6 lg:gap-10">
+          <div className="flex items-center justify-between">
             <h1 className="text-left text-3xl font-extrabold tracking-tighter text-blue-900 md:text-4xl lg:text-5xl">
               Popular
             </h1>
-            <div className="relative w-full justify-self-center">
-              <form className="flex items-center">
-                <Search className="absolute left-3 h-4 w-4 text-primary/60 md:h-5 md:w-5" />
-                <Input
-                  placeholder="Search for promo or category"
-                  className="bg-blue-100 pl-8 text-sm text-primary placeholder:text-primary/60 focus-visible:ring-blue-600 focus-visible:ring-offset-2 md:pl-10 md:text-base"
-                />
-              </form>
+            <div className="flex gap-2">
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8 rounded-xl md:h-10 md:w-10"
+                onClick={() => {
+                  const container = document.getElementById("popular-scroll");
+                  if (container) {
+                    container.scrollBy({ left: -300, behavior: "smooth" });
+                  }
+                }}
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                size="icon"
+                variant="outline"
+                className="h-8 w-8 rounded-xl md:h-10 md:w-10"
+                onClick={() => {
+                  const container = document.getElementById("popular-scroll");
+                  if (container) {
+                    container.scrollBy({ left: 300, behavior: "smooth" });
+                  }
+                }}
+              >
+                <ArrowRight className="h-4 w-4" />
+              </Button>
             </div>
           </div>
 
-          <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
+          <div
+            id="popular-scroll"
+            className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-4"
+          >
             <div className="flex min-w-max gap-4 px-4">
               {popularPromos.map((promo, idx) => (
                 <div key={idx} className="snap-center">
-                  <TransportRewardCard
-                    name={promo.name}
-                    icon={promo.icon}
-                    points={promo.points}
-                    discount={promo.discount}
-                    isNew={promo.isNew}
+                  <RankLockedTransportCard
+                    {...promo}
+                    currentRank={currentRank}
                     isRedeemed={redeemed.includes(promo.name)}
                     onRedeem={() => handleRedeemed(promo.name)}
                   />
@@ -263,15 +364,12 @@ export default function Points() {
             <div className="flex min-w-max gap-4 px-4">
               {recommendedPromos.map((promo, idx) => (
                 <div key={idx} className="snap-center">
-                  <TransportRewardCard
-                    name={promo.name}
-                    icon={promo.icon}
-                    points={promo.points}
-                    discount={promo.discount}
-                    isNew={promo.isNew}
-                    variant="light"
+                  <RankLockedTransportCard
+                    {...promo}
+                    currentRank={currentRank}
                     isRedeemed={redeemed.includes(promo.name)}
                     onRedeem={() => handleRedeemed(promo.name)}
+                    variant="light"
                   />
                 </div>
               ))}
