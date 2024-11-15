@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { type Viewport, type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { Toaster } from "sonner";
 
 export const viewport: Viewport = {
   themeColor: "#0b53a8",
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} scroll-smooth font-inter`}>
       <body>
+        <Toaster />
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>
