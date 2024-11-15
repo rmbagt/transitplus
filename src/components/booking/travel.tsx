@@ -492,7 +492,7 @@ export function TravelCard() {
         </CardContent>
       </Card>
       <AlertDialog open={showNFCDialog} onOpenChange={setShowNFCDialog}>
-        <AlertDialogContent className="max-w-xs rounded-xl">
+        <AlertDialogContent className="flex h-fit max-w-xs flex-col rounded-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Scan with NFC to Pay</AlertDialogTitle>
             <AlertDialogDescription>
@@ -502,53 +502,57 @@ export function TravelCard() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="flex flex-col items-center justify-center space-y-4">
-            <AnimatePresence mode="wait">
-              {nfcSupported && nfcStatus === "idle" && (
-                <motion.div
-                  key="wifi"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <WifiIcon className="h-24 w-24 text-blue-500" />
-                </motion.div>
-              )}
-              {nfcSupported && nfcStatus === "scanning" && (
-                <motion.div
-                  key="scanning"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <Loader2 className="h-24 w-24 animate-spin text-blue-500" />
-                </motion.div>
-              )}
-              {nfcSupported && nfcStatus === "success" && (
-                <motion.div
-                  key="success"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <CheckCircle className="h-24 w-24 text-green-500" />
-                </motion.div>
-              )}
-              {(nfcStatus === "error" || !nfcSupported) && (
-                <motion.div
-                  key="error"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <XIcon className="h-24 w-24 text-red-500" />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="flex h-24 w-24 items-center justify-center">
+              <AnimatePresence mode="wait">
+                {nfcSupported && nfcStatus === "idle" && (
+                  <motion.div
+                    key="wifi"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <WifiIcon className="h-24 w-24 text-blue-500" />
+                  </motion.div>
+                )}
+                {nfcSupported && nfcStatus === "scanning" && (
+                  <motion.div
+                    key="scanning"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <Loader2 className="h-24 w-24 animate-spin text-blue-500" />
+                  </motion.div>
+                )}
+                {nfcSupported && nfcStatus === "success" && (
+                  <motion.div
+                    key="success"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <CheckCircle className="h-24 w-24 text-green-500" />
+                  </motion.div>
+                )}
+                {(nfcStatus === "error" || !nfcSupported) && (
+                  <motion.div
+                    key="error"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <XIcon className="h-24 w-24 text-red-500" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <div className="text-center text-sm">
-              {nfcStatus === "idle" && "Ready to scan"}
-              {nfcStatus === "scanning" && "Scanning..."}
-              {nfcStatus === "success" && "Payment successful!"}
-              {nfcStatus === "error" && "Scan failed. Please try again."}
+              {nfcSupported && nfcStatus === "idle" && "Ready to scan"}
+              {nfcSupported && nfcStatus === "scanning" && "Scanning..."}
+              {nfcSupported && nfcStatus === "success" && "Payment successful!"}
+              {nfcSupported &&
+                nfcStatus === "error" &&
+                "Scan failed. Please try again."}
             </div>
           </div>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
