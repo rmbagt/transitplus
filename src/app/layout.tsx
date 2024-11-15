@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 export const metadata: Metadata = {
   title: "TransitPlus",
   description: "Your Journey to a Sustainable Future Starts Here!",
+  themeColor: [{ color: "#0b53a8" }],
   openGraph: {
     url: "https://transitplus.rey.mba",
     siteName: "TransitPlus",
