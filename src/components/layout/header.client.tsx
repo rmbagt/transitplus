@@ -9,8 +9,6 @@ export function HeaderClient({ session }: { session: Session | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  console.log(session);
-
   const navItems = [
     ["Home", "/#home"],
     ["Points", "/#points"],
