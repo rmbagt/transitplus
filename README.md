@@ -72,8 +72,10 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/interium-hack"
 NEXTAUTH_SECRET=""
 NEXTAUTH_URL="http://localhost:3000"
 
-DISCORD_CLIENT_ID=""
-DISCORD_CLIENT_SECRET=""
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+
+OPENAI_KEY=""
 ```
 
 ## Usage
@@ -84,7 +86,7 @@ DISCORD_CLIENT_SECRET=""
 
 2. **Login:**
 
-   Untuk mengakses fitur lengkap, login diperlukan. Anda bisa melakukan login menggunakan akun Google atau Discord.
+   Untuk mengakses fitur lengkap, login diperlukan. Anda bisa melakukan login menggunakan akun Google.
 
 3. **Signup:**
 
@@ -95,7 +97,7 @@ DISCORD_CLIENT_SECRET=""
    - Berisi history penggunaan transportasi dan personal information.
    - Daftar perjalanan yang telah dilakukan
 
-5. **/events:**
+5. **/events**
 
    - Akses melalui Sidebar --> Events.
    - Berisi informasi mengenai acara atau inisiatif komunitas yang berkaitan dengan penggunaan transportasi umum.
@@ -111,10 +113,11 @@ DISCORD_CLIENT_SECRET=""
 - **Poin Perjalanan:** Mengumpulkan poin dari setiap penggunaan transportasi umum.
 - **Penukaran Reward:** Menukarkan poin dengan berbagai hadiah dari mitra TransitPlus.
 - **Riwayat Perjalanan:** Melihat daftar perjalanan dan statistik penggunaan.
-- **Login Integration:** Masuk dengan mudah menggunakan akun Google atau Discord.
+- **Login Integration:** Masuk dengan mudah menggunakan akun Google.
 - **Community Events:** Berpartisipasi dalam acara atau komunitas untuk mendukung penggunaan transportasi umum.
 
 ## Contributors
+
 <a href="https://github.com/reynaldomarchell/interium-hack/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=reynaldomarchell/interium-hack"/>
 </a>
