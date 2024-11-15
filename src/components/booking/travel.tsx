@@ -125,7 +125,7 @@ export function TravelCard() {
                 key={method.name}
                 variant="outline"
                 onClick={() => setSelectedPayment(method.name)}
-                className={`aspect-square h-fit w-full flex-col gap-1 p-1 sm:gap-2 sm:p-2 ${
+                className={`h-fit w-full flex-col gap-1 p-1 sm:gap-2 sm:p-2 ${
                   selectedPayment === method.name
                     ? "bg-gray-300 text-muted-foreground"
                     : ""
@@ -138,7 +138,7 @@ export function TravelCard() {
           </div>
         </div>
 
-        <Link href="#" className="block w-full">
+        <Link href="/profile" className="block w-full">
           <Button className="w-full bg-primary">Book Now</Button>
         </Link>
       </CardContent>
