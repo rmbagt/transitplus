@@ -124,7 +124,7 @@ interface TransportCardProps {
   currentRank: { level: number; name: string };
 }
 
-const RankLockedTransportCard = ({
+function RankLockedTransportCard({
   name,
   icon,
   points,
@@ -135,7 +135,7 @@ const RankLockedTransportCard = ({
   onRedeem,
   requiredRank,
   currentRank,
-}: TransportCardProps) => {
+}: TransportCardProps) {
   const isLocked = currentRank.level < requiredRank.level;
 
   return (
@@ -160,7 +160,7 @@ const RankLockedTransportCard = ({
       )}
     </div>
   );
-};
+}
 
 export default function Points() {
   const router = useRouter();
@@ -231,7 +231,7 @@ export default function Points() {
         </div>
       </div>
 
-      <div className="container relative -top-16 mx-auto w-screen rounded-t-xl bg-white p-4 md:-top-24 md:p-6 lg:-top-32 lg:rounded-t-[4rem] lg:p-10">
+      <div className="container relative -top-16 mx-auto w-screen rounded-t-xl bg-white p-4 md:-top-24 md:w-[calc(100vw-18rem)] md:p-6 lg:-top-32 lg:rounded-t-[4rem] lg:p-10">
         {/* Search Bar */}
         <div className="relative my-4 w-full justify-self-center">
           <form className="flex items-center">
@@ -378,7 +378,7 @@ export default function Points() {
         </div>
       </div>
       <div className="absolute bottom-0 flex h-16 w-full justify-center md:h-32">
-        <div className="container flex flex-col items-center justify-center bg-white">
+        <div className="container flex w-screen flex-col items-center justify-center bg-white text-center md:w-[calc(100vw-18rem)]">
           <span className="text-xl font-semibold text-blue-900">
             Ingin lebih banyak promo?
           </span>
