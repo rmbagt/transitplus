@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Crown, Coins, Gift, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function StatisticPoints() {
   return (
@@ -27,13 +28,15 @@ export default function StatisticPoints() {
               </Card>
 
               <Card className="cursor-pointer bg-primary text-white transition-colors hover:bg-primary/90">
-                <CardContent className="flex h-full items-center justify-between p-4">
-                  <div className="flex items-center space-x-4">
-                    <Gift className="h-6 w-6" />
-                    <span className="font-bold">Redeem</span>
-                  </div>
-                  <ArrowRight className="h-5 w-5" />
-                </CardContent>
+                <Link href="/points">
+                  <CardContent className="flex h-full items-center justify-between p-4">
+                    <div className="flex items-center space-x-4">
+                      <Gift className="h-6 w-6" />
+                      <span className="font-bold">Redeem</span>
+                    </div>
+                    <ArrowRight className="h-5 w-5" />
+                  </CardContent>
+                </Link>
               </Card>
             </div>
 
@@ -48,9 +51,11 @@ export default function StatisticPoints() {
                     <div className="flex items-center rounded-md bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
                       Silver (Level 2)
                     </div>
-                    <Button size="icon" aria-label="View level details">
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
+                    <Link href="/points">
+                      <Button size="icon" aria-label="View level details">
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
                 <Progress value={60} className="h-2" />

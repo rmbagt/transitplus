@@ -21,6 +21,9 @@ import Link from "next/link";
 
 export function TravelCard() {
   const [date, setDate] = useState<Date>();
+  const [selectedTransport, setSelectedTransport] = useState<string>();
+  const [selectedPayment, setSelectedPayment] = useState<string>();
+
   return (
     <Card className="w-full max-w-[485px]">
       <CardContent className="space-y-4 p-4 sm:p-6">
@@ -77,16 +80,21 @@ export function TravelCard() {
               <Button
                 key={transport.name}
                 variant="outline"
-                className="aspect-square h-fit w-full flex-col gap-2 p-1 md:p-2"
+                onClick={() => setSelectedTransport(transport.name)}
+                className={`aspect-square h-fit w-full flex-col gap-2 p-1 md:p-2 ${
+                  selectedTransport === transport.name
+                    ? "bg-gray-300 text-muted-foreground"
+                    : ""
+                }`}
               >
                 <Image
                   src={transport.icon}
                   alt={transport.name}
                   width={100}
                   height={100}
-                  className="h-8 w-8 object-contain sm:h-10 sm:w-10"
+                  className="h-8 w-8 rounded-md object-contain sm:h-10 sm:w-10"
                 />
-                <span className="hidden text-xs sm:inline">
+                <span className="hidden text-[8px] sm:inline">
                   {transport.name}
                 </span>
               </Button>
@@ -107,9 +115,8 @@ export function TravelCard() {
 
         <div className="flex w-full flex-col items-start justify-center gap-2 rounded-lg border-2 bg-white p-3 text-muted-foreground">
           <h3 className="text-sm font-medium">Payment Methods</h3>
-          <div className="grid h-fit w-full grid-cols-4 gap-2">
+          <div className="grid h-fit w-full grid-cols-3 gap-2">
             {[
-              { name: "Cash", icon: CreditCardIcon },
               { name: "E-Money", icon: CreditCardIcon },
               { name: "QRIS", icon: CreditCardIcon },
               { name: "Card", icon: CreditCardIcon },
@@ -117,7 +124,12 @@ export function TravelCard() {
               <Button
                 key={method.name}
                 variant="outline"
-                className="aspect-square h-fit w-full flex-col gap-1 p-1 sm:gap-2 sm:p-2"
+                onClick={() => setSelectedPayment(method.name)}
+                className={`aspect-square h-fit w-full flex-col gap-1 p-1 sm:gap-2 sm:p-2 ${
+                  selectedPayment === method.name
+                    ? "bg-gray-300 text-muted-foreground"
+                    : ""
+                }`}
               >
                 <method.icon className="h-6 w-6 sm:h-8 sm:w-8" />
                 <span className="text-[10px] sm:text-xs">{method.name}</span>
@@ -126,7 +138,7 @@ export function TravelCard() {
           </div>
         </div>
 
-        <Link href="/tutorial" className="block w-full">
+        <Link href="#" className="block w-full">
           <Button className="w-full bg-primary">Book Now</Button>
         </Link>
       </CardContent>

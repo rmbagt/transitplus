@@ -5,27 +5,27 @@ export const TransportItems = [
   {
     name: "Transjakarta",
     icon: <Bus className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train1.svg",
+    image: "/tutorial-tj.svg",
   },
   {
     name: "MRT",
     icon: <Train className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train2.svg",
+    image: "/tutorial-mrt.svg",
   },
   {
     name: "LRT",
     icon: <Train className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train3.svg",
+    image: "/train1.svg",
   },
   {
     name: "KRL",
     icon: <Train className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train1.svg",
+    image: "/tutorial-krl.svg",
   },
   {
     name: "Mikrotrans",
     icon: <Bus className="h-5 w-5 md:h-6 md:w-6" />,
-    image: "/train2.svg",
+    image: "/train3.svg",
   },
 ];
 

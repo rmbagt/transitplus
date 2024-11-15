@@ -166,9 +166,6 @@ export default function Points() {
                 <div className="flex w-fit items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-bold text-primary md:px-3 md:text-sm">
                   Silver (Level 2)
                 </div>
-                <Button size="icon" className="h-8 w-8 md:h-9 md:w-9">
-                  <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-                </Button>
               </div>
             </div>
             <Progress value={60} className="h-2" />
@@ -260,7 +257,7 @@ export default function Points() {
           <span className="text-xl font-semibold text-blue-900">
             Ingin lebih banyak promo?
           </span>
-          <span className="text-balance text-sm text-muted-foreground md:text-base">
+          <span className="text-balance text-xs text-muted-foreground md:text-base">
             Gunakan aplikasi kami lebih sering untuk penawaran menarik!
           </span>
         </div>
