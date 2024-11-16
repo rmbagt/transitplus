@@ -116,6 +116,7 @@ export function TravelCard() {
     if (showNFCDialog && nfcSupported) {
       void handleNfcScan();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showNFCDialog, nfcSupported]);
 
   const getLocationAddress = async (latitude: number, longitude: number) => {
@@ -217,7 +218,10 @@ export function TravelCard() {
           toast.success("NFC Scan Successful", {
             description: "Your payment has been processed.",
           });
-          setTimeout(() => setShowNFCDialog(false), 2000);
+          setTimeout(() => {
+            setShowNFCDialog(false);
+            form.reset();
+          }, 2000);
         });
       } else {
         setNfcStatus("error");
@@ -481,10 +485,7 @@ export function TravelCard() {
                   className="w-full bg-primary"
                   disabled={isPending}
                 >
-                  {isPending ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : null}
-                  {isPending ? "Claiming..." : "Claim Now"}
+                  Claim Now
                 </Button>
               </motion.div>
             </form>
