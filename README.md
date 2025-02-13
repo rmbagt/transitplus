@@ -46,7 +46,7 @@ TransitPlus adalah aplikasi berbasis web yang dirancang untuk memberikan pengala
 1. **Clone Repository:**
 
    ```bash
-   git clone https://github.com/reynaldomarchell/interium-hack.git
+   git clone https://github.com/rmbagt/transitplus.git
    ```
 
 2. **Install Dependencies:**
@@ -135,6 +135,6 @@ OPENAI_KEY=""
 
 ## Contributors
 
-<a href="https://github.com/reynaldomarchell/interium-hack/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=reynaldomarchell/interium-hack"/>
+<a href="https://github.com/rmbagt/transitplus/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=rmbagt/transitplus"/>
 </a>
